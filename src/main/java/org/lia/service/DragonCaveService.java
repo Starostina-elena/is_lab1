@@ -11,9 +11,10 @@ public class DragonCaveService {
     @Autowired
     private DragonCaveRepository dragonCaveRepository;
 
-    public void saveDragonCave(Integer depth) {
+    public DragonCave saveDragonCave(Integer depth) {
         DragonCave dragonCave = new DragonCave();
         dragonCave.setDepth(depth);
         dragonCaveRepository.save(dragonCave);
+        return dragonCave;
     }
 }

@@ -11,10 +11,11 @@ public class CoordinatesService {
     @Autowired
     private CoordinatesRepository coordinatesRepository;
 
-    public void saveCoordinates(Integer x, Long y) {
+    public Coordinates saveCoordinates(Integer x, Long y) {
         Coordinates coordinates = new Coordinates();
         coordinates.setX(x);
         coordinates.setY(y);
         coordinatesRepository.save(coordinates);
+        return coordinates;
     }
 }

@@ -18,7 +18,7 @@ public class PersonService {
     @Autowired
     private LocationRepository locationRepository;
 
-    public void savePerson(String name, Color eyeColor, Color hairColor, Location location, Long weight, Country nationality) {
+    public Person savePerson(String name, Color eyeColor, Color hairColor, Location location, Long weight, Country nationality) {
         Person person = new Person();
         person.setName(name);
         person.setEyeColor(eyeColor);
@@ -27,5 +27,6 @@ public class PersonService {
         person.setWeight(weight);
         person.setNationality(nationality);
         personRepository.save(person);
+        return person;
     }
 }

@@ -56,7 +56,7 @@ public class Dragon {
     @Getter
     @ManyToOne()
     @JoinColumn(name = "killer_id")
-    private Person killer; //Поле может быть null
+    private Person killer;
 
     @Setter
     @Getter
@@ -66,20 +66,17 @@ public class Dragon {
 
     @Setter
     @Getter
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "color")
+    @Column(nullable = false)
     private Color color;
 
     @Setter
     @Getter
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "dragon_type")
+    @Column(nullable = false)
     private DragonType type;
 
     @Setter
     @Getter
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "dragon_character")
+    @Column(nullable = false)
     private DragonCharacter character;
 
     @Setter

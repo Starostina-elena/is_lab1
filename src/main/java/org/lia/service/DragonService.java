@@ -18,7 +18,7 @@ public class DragonService {
     @Autowired
     private DragonRepository dragonRepository;
 
-    public void saveDragon(String name, Coordinates coordinates,
+    public Dragon saveDragon(String name, Coordinates coordinates,
                            DragonCave cave, Person killer, long age, Color color, DragonType type,
                            DragonCharacter character, DragonHead head) {
         Dragon dragon = new Dragon();
@@ -32,5 +32,6 @@ public class DragonService {
         dragon.setCharacter(character);
         dragon.setHead(head);
         dragonRepository.save(dragon);
+        return dragon;
     }
 }
