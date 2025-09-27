@@ -9,6 +9,8 @@ import org.lia.repository.LocationRepository;
 import org.lia.repository.PersonRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,5 +30,13 @@ public class PersonService {
         person.setNationality(nationality);
         personRepository.save(person);
         return person;
+    }
+
+    public Page<Person> getPersonsPaged(Pageable pageable) {
+        return personRepository.findAll(pageable);
+    }
+
+    public long count() {
+        return personRepository.count();
     }
 }

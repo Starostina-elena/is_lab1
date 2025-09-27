@@ -29,13 +29,11 @@ public class Person {
 
     @Setter
     @Getter
-    //@Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Color eyeColor;
 
     @Setter
     @Getter
-    // @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Color hairColor;
 
@@ -54,7 +52,6 @@ public class Person {
 
     @Setter
     @Getter
-    //@Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Country nationality;
 }

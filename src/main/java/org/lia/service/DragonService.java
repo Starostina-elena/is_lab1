@@ -11,6 +11,8 @@ import org.lia.repository.DragonRepository;
 import org.lia.models.utils.Color;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,5 +35,13 @@ public class DragonService {
         dragon.setHead(head);
         dragonRepository.save(dragon);
         return dragon;
+    }
+
+    public Page<Dragon> getDragonsPaged(Pageable pageable) {
+        return dragonRepository.findAll(pageable);
+    }
+
+    public long count() {
+        return dragonRepository.count();
     }
 }

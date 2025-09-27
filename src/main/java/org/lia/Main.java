@@ -20,11 +20,11 @@ public class Main {
         CoordinatesService coordinatesService = context.getBean(CoordinatesService.class);
         DragonService dragonService = context.getBean(DragonService.class);
 
-        Location location = locationService.saveLocation(1.4, 1.4f, 1.4f, "home");
-        Person person = personService.savePerson("Bob", Color.YELLOW, Color.BLUE, location, 80L, Country.GERMANY);
-        DragonCave cave = dragonCaveService.saveDragonCave(111);
-        DragonHead dragonHead = dragonHeadService.saveDragonHead(5);
-        Coordinates coordinates = coordinatesService.saveCoordinates(100, 200L);
-        Dragon dragon = dragonService.saveDragon("Smaug", coordinates, cave, person, 300, Color.RED, DragonType.AIR, DragonCharacter.CHAOTIC, dragonHead);
+//        Location location = locationService.saveLocation(1.4, 1.4f, 1.4f, "home");
+//        Person person = personService.savePerson("Bob", Color.YELLOW, Color.BLUE, location, 80L, Country.GERMANY);
+//        DragonCave cave = dragonCaveService.saveDragonCave(111);
+//        DragonHead dragonHead = dragonHeadService.saveDragonHead(5);
+//        Coordinates coordinates = coordinatesService.saveCoordinates(100, 200L);
+//        Dragon dragon = dragonService.saveDragon("Smaug", coordinates, cave, person, 300, Color.RED, DragonType.AIR, DragonCharacter.CHAOTIC, dragonHead);
     }
 }
