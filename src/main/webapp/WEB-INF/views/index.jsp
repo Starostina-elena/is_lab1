@@ -39,6 +39,7 @@
 <div id="dragonPagination"></div>
 
 <h2>Локации</h2>
+<a href="${pageContext.request.contextPath}/locations/create" target="_blank">+</a>
 <table id="locationTable">
     <tr>
         <th>ID</th>

@@ -137,7 +137,7 @@ function renderLocationTable(locations) {
     }
     locations.forEach(l => {
         const row = table.insertRow();
-        row.insertCell().textContent = l.id;
+        row.insertCell().innerHTML = `<a href="locations/update/${l.id}" target="_blank">${l.id}</a>`;
         row.insertCell().textContent = l.name;
         row.insertCell().textContent = l.x;
         row.insertCell().textContent = l.y;

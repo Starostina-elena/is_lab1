@@ -5,12 +5,14 @@ import org.lia.models.utils.Location;
 import org.lia.service.LocationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,5 +37,56 @@ public class LocationController {
         response.put("pageCount", pageCount);
 
         return response;
+    }
+
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("location", new Location());
+        return "location/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute Location location, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "location/create";
+        }
+        Location saved = locationService.saveLocation(location);
+        return "redirect:/locations/update/" + saved.getId();
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        Location location = locationService.findById(id);
+        if (location == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        model.addAttribute("location", location);
+        model.addAttribute("editId", id);
+        return "location/create";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, @Valid @ModelAttribute Location location, BindingResult bindingResult, Model model) {
+        model.addAttribute("editId", id);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("location", location);
+            return "location/create";
+        }
+        Location existing = locationService.findById(id);
+        if (existing == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        existing.setX(location.getX());
+        existing.setY(location.getY());
+        existing.setZ(location.getZ());
+        existing.setName(location.getName());
+        locationService.saveLocation(existing);
+        return "redirect:/locations/update/" + existing.getId();
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        locationService.deleteById(id);
+        return "redirect:/";
     }
 }

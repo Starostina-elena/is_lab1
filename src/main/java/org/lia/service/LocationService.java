@@ -22,11 +22,23 @@ public class LocationService {
         return location;
     }
 
+    public Location saveLocation(Location location) {
+        return locationRepository.save(location);
+    }
+
     public Page<Location> getLocationsPaged(Pageable pageable) {
         return locationRepository.findAll(pageable);
     }
 
     public long count() {
         return locationRepository.count();
+    }
+
+    public Location findById(Long id) {
+        return locationRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        locationRepository.deleteById(id);
     }
 }
