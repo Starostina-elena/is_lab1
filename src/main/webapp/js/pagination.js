@@ -174,7 +174,7 @@ function renderDragonHeadTable(dragonHeads) {
     }
     dragonHeads.forEach(dh => {
         const row = table.insertRow();
-        row.insertCell().textContent = dh.id;
+        row.insertCell().innerHTML = `<a href="dragon_heads/update/${dh.id}" target="_blank">${dh.id}</a>`;
         row.insertCell().textContent = dh.eyesCount;
     });
 }

@@ -60,6 +60,7 @@
 <div id="dragonCavePagination"></div>
 
 <h2>Головы драконов</h2>
+<a href="${pageContext.request.contextPath}/dragon_heads/create" target="_blank">+</a>
 <table id="dragonHeadTable">
     <tr>
         <th>ID</th>

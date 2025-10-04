@@ -20,11 +20,23 @@ public class DragonHeadService {
         return dragonHead;
     }
 
+    public DragonHead saveDragonHead(DragonHead dragonHead) {
+        return dragonHeadRepository.save(dragonHead);
+    }
+
     public Page<DragonHead> getDragonHeadsPaged(Pageable pageable) {
         return dragonHeadRepository.findAll(pageable);
     }
 
     public long count() {
         return dragonHeadRepository.count();
+    }
+
+    public DragonHead findById(Long id) {
+        return dragonHeadRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        dragonHeadRepository.deleteById(id);
     }
 }
