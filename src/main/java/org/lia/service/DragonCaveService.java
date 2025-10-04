@@ -40,4 +40,8 @@ public class DragonCaveService {
     public void deleteById(Long id) {
         dragonCaveRepository.deleteById(id);
     }
+
+    public Iterable<DragonCave> findAll() {
+        return dragonCaveRepository.findAll();
+    }
 }

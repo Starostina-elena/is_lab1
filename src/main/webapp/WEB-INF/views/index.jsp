@@ -22,13 +22,14 @@
 <div id="personPagination"></div>
 
 <h2>Драконы</h2>
+<a href="${pageContext.request.contextPath}/dragons/create" target="_blank">+</a>
 <table id="dragonTable">
     <tr>
         <th>ID</th>
         <th>Имя</th>
         <th>Координаты</th>
         <th>Дата создания</th>
-        <th>глубина пещеры</th>
+        <th>Глубина пещеры</th>
         <th>Убийца</th>
         <th>Возраст</th>
         <th>Цвет</th>

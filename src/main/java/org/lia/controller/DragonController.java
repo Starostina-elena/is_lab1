@@ -1,15 +1,22 @@
 package org.lia.controller;
 
 import org.lia.models.dragon.Dragon;
-import org.lia.service.DragonService;
+import org.lia.models.utils.Color;
+import org.lia.models.utils.DragonType;
+import org.lia.models.utils.DragonCharacter;
+import org.lia.controller.editor.*;
+import org.lia.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,10 +25,20 @@ import java.util.Map;
 @RequestMapping("/dragons")
 public class DragonController {
     private final DragonService dragonService;
+    private final CoordinatesService coordinatesService;
+    private final DragonCaveService dragonCaveService;
+    private final PersonService personService;
+    private final DragonHeadService dragonHeadService;
     int pageSize = 10;
 
-    public DragonController(DragonService dragonService) {
+    public DragonController(DragonService dragonService, CoordinatesService coordinatesService,
+                            DragonCaveService dragonCaveService, PersonService personService,
+                            DragonHeadService dragonHeadService) {
         this.dragonService = dragonService;
+        this.coordinatesService = coordinatesService;
+        this.dragonCaveService = dragonCaveService;
+        this.personService = personService;
+        this.dragonHeadService = dragonHeadService;
     }
 
     @GetMapping("/get_page")
@@ -36,5 +53,101 @@ public class DragonController {
         response.put("pageCount", pageCount);
 
         return response;
+    }
+
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("dragon", new Dragon());
+        model.addAttribute("colorList", Color.values());
+        model.addAttribute("typeList", DragonType.values());
+        model.addAttribute("characterList", DragonCharacter.values());
+        model.addAttribute("coordinatesList", coordinatesService.findAll());
+        model.addAttribute("dragonCaveList", dragonCaveService.findAll());
+        model.addAttribute("personList", personService.findAll());
+        model.addAttribute("dragonHeadList", dragonHeadService.findAll());
+        return "dragon/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute Dragon dragon, BindingResult bindingResult, Model model) {
+        if (dragon.getCreationDate() == null) {
+            dragon.setCreationDate(java.time.ZonedDateTime.now());
+        }
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getAllErrors());
+            model.addAttribute("colorList", Color.values());
+            model.addAttribute("typeList", DragonType.values());
+            model.addAttribute("characterList", DragonCharacter.values());
+            model.addAttribute("coordinatesList", coordinatesService.findAll());
+            model.addAttribute("dragonCaveList", dragonCaveService.findAll());
+            model.addAttribute("personList", personService.findAll());
+            model.addAttribute("dragonHeadList", dragonHeadService.findAll());
+            return "dragon/create";
+        }
+        Dragon saved = dragonService.saveDragon(dragon);
+        return "redirect:/dragons/update/" + saved.getId();
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        Dragon dragon = dragonService.findById(id);
+        if (dragon == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        model.addAttribute("dragon", dragon);
+        model.addAttribute("editId", id);
+        model.addAttribute("colorList", Color.values());
+        model.addAttribute("typeList", DragonType.values());
+        model.addAttribute("characterList", DragonCharacter.values());
+        model.addAttribute("coordinatesList", coordinatesService.findAll());
+        model.addAttribute("dragonCaveList", dragonCaveService.findAll());
+        model.addAttribute("personList", personService.findAll());
+        model.addAttribute("dragonHeadList", dragonHeadService.findAll());
+        return "dragon/create";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, @Valid @ModelAttribute Dragon dragon, BindingResult bindingResult, Model model) {
+        model.addAttribute("editId", id);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("colorList", Color.values());
+            model.addAttribute("typeList", DragonType.values());
+            model.addAttribute("characterList", DragonCharacter.values());
+            model.addAttribute("coordinatesList", coordinatesService.findAll());
+            model.addAttribute("dragonCaveList", dragonCaveService.findAll());
+            model.addAttribute("personList", personService.findAll());
+            model.addAttribute("dragonHeadList", dragonHeadService.findAll());
+            model.addAttribute("dragon", dragon);
+            return "dragon/create";
+        }
+        Dragon existing = dragonService.findById(id);
+        if (existing == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        existing.setName(dragon.getName());
+        existing.setCoordinates(dragon.getCoordinates() != null ? coordinatesService.findById(dragon.getCoordinates().getId()) : null);
+        existing.setCave(dragon.getCave() != null ? dragonCaveService.findById(dragon.getCave().getId()) : null);
+        existing.setKiller(dragon.getKiller() != null ? personService.findById(dragon.getKiller().getId()) : null);
+        existing.setAge(dragon.getAge());
+        existing.setColor(dragon.getColor());
+        existing.setType(dragon.getType());
+        existing.setCharacter(dragon.getCharacter());
+        existing.setHead(dragon.getHead() != null ? dragonHeadService.findById(dragon.getHead().getId()) : null);
+        dragonService.saveDragon(existing);
+        return "redirect:/dragons/update/" + existing.getId();
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        dragonService.deleteById(id);
+        return "redirect:/";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(org.lia.models.dragon.DragonHead.class, new DragonHeadEditor(dragonHeadService));
+        binder.registerCustomEditor(org.lia.models.dragon.DragonCave.class, new DragonCaveEditor(dragonCaveService));
+        binder.registerCustomEditor(org.lia.models.person.Person.class, new PersonEditor(personService));
+        binder.registerCustomEditor(org.lia.models.utils.Coordinates.class, new CoordinatesEditor(coordinatesService));
     }
 }

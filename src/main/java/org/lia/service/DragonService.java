@@ -37,11 +37,23 @@ public class DragonService {
         return dragon;
     }
 
+    public Dragon saveDragon(Dragon dragon) {
+        return dragonRepository.save(dragon);
+    }
+
     public Page<Dragon> getDragonsPaged(Pageable pageable) {
         return dragonRepository.findAll(pageable);
     }
 
     public long count() {
         return dragonRepository.count();
+    }
+
+    public Dragon findById(Long id) {
+        return dragonRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        dragonRepository.deleteById(id);
     }
 }

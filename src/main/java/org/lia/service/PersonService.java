@@ -51,4 +51,8 @@ public class PersonService {
     public void deleteById(Long id) {
         personRepository.deleteById(id);
     }
+
+    public Iterable<Person> findAll() {
+        return personRepository.findAll();
+    }
 }

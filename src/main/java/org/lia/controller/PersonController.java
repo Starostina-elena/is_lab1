@@ -1,6 +1,7 @@
 package org.lia.controller;
 
 
+import org.lia.controller.editor.LocationEditor;
 import org.lia.models.person.Person;
 import org.lia.models.utils.Color;
 import org.lia.service.LocationService;
@@ -63,6 +64,9 @@ public class PersonController {
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute Person person, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("colorList", Color.values());
+            model.addAttribute("nationalityList", org.lia.models.utils.Country.values());
+            model.addAttribute("locationList", locationService.findAll());
             return "person/create";
         }
         Person saved = personService.savePerson(person);
@@ -88,6 +92,9 @@ public class PersonController {
         model.addAttribute("editId", id);
         if (bindingResult.hasErrors()) {
             model.addAttribute("person", person);
+            model.addAttribute("colorList", Color.values());
+            model.addAttribute("nationalityList", org.lia.models.utils.Country.values());
+            model.addAttribute("locationList", locationService.findAll());
             return "person/create";
         }
         Person existing = personService.findById(id);

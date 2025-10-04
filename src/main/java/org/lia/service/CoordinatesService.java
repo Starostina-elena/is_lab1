@@ -40,4 +40,8 @@ public class CoordinatesService {
     public void deleteById(Long id) {
         coordinatesRepository.deleteById(id);
     }
+
+    public Iterable<Coordinates> findAll() {
+        return coordinatesRepository.findAll();
+    }
 }

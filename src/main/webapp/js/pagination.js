@@ -107,7 +107,7 @@ function renderDragonTable(dragons) {
     }
     dragons.forEach(d => {
         const row = table.insertRow();
-        row.insertCell().textContent = d.id;
+        row.insertCell().innerHTML = `<a href="dragons/update/${d.id}" target="_blank">${d.id}</a>`;
         row.insertCell().textContent = d.name;
         row.insertCell().textContent = d.coordinates.x + ", " + d.coordinates.y;
         row.insertCell().textContent = formatDate(d.creationDate);

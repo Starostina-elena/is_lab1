@@ -34,13 +34,12 @@ public class Dragon {
     @Setter
     @Getter
     @NotNull
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "coordinates_id", nullable = false)
     private Coordinates coordinates;
 
     @Setter
     @Getter
-    @NotNull
     @Column(nullable = false)
     @CreationTimestamp
     private java.time.ZonedDateTime creationDate;
@@ -62,7 +61,7 @@ public class Dragon {
     @Getter
     @Column()
     @Min(value = 0, message = "Возраст должен быть больше 0")
-    private long age;
+    private Long age;
 
     @Setter
     @Getter

@@ -1,4 +1,4 @@
-package org.lia.controller;
+package org.lia.controller.editor;
 
 import org.lia.models.utils.Location;
 import org.lia.service.LocationService;

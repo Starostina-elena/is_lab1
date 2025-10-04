@@ -39,4 +39,8 @@ public class DragonHeadService {
     public void deleteById(Long id) {
         dragonHeadRepository.deleteById(id);
     }
+
+    public Iterable<DragonHead> findAll() {
+        return dragonHeadRepository.findAll();
+    }
 }
