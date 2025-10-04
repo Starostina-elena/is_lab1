@@ -38,6 +38,46 @@
 </table>
 <div id="dragonPagination"></div>
 
+<h2>Локации</h2>
+<table id="locationTable">
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>X</th>
+        <th>Y</th>
+        <th>Z</th>
+    </tr>
+</table>
+<div id="locationPagination"></div>
+
+<h2>Пещеры драконов</h2>
+<table id="dragonCaveTable">
+    <tr>
+        <th>ID</th>
+        <th>Глубина</th>
+    </tr>
+</table>
+<div id="dragonCavePagination"></div>
+
+<h2>Головы драконов</h2>
+<table id="dragonHeadTable">
+    <tr>
+        <th>ID</th>
+        <th>Количество глаз</th>
+    </tr>
+</table>
+<div id="dragonHeadPagination"></div>
+
+<h2>Координаты</h2>
+<table id="coordinatesTable">
+    <tr>
+        <th>ID</th>
+        <th>X</th>
+        <th>Y</th>
+    </tr>
+</table>
+<div id="coordinatesPagination"></div>
+
 <script src="${pageContext.request.contextPath}/js/pagination.js"></script>
 
 </body>

@@ -1,9 +1,12 @@
 package org.lia.service;
 
 import org.lia.models.dragon.DragonCave;
+import org.lia.models.person.Person;
 import org.lia.repository.DragonCaveRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,5 +19,13 @@ public class DragonCaveService {
         dragonCave.setDepth(depth);
         dragonCaveRepository.save(dragonCave);
         return dragonCave;
+    }
+
+    public Page<DragonCave> getDragonCavesPaged(Pageable pageable) {
+        return dragonCaveRepository.findAll(pageable);
+    }
+
+    public long count() {
+        return dragonCaveRepository.count();
     }
 }

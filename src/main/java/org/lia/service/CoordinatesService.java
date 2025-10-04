@@ -3,6 +3,8 @@ package org.lia.service;
 import org.lia.models.utils.Coordinates;
 import org.lia.repository.CoordinatesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -17,5 +19,13 @@ public class CoordinatesService {
         coordinates.setY(y);
         coordinatesRepository.save(coordinates);
         return coordinates;
+    }
+
+    public Page<Coordinates> getCoordinatesPaged(Pageable pageable) {
+        return coordinatesRepository.findAll(pageable);
+    }
+
+    public long count() {
+        return coordinatesRepository.count();
     }
 }
