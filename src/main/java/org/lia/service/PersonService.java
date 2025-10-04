@@ -32,11 +32,23 @@ public class PersonService {
         return person;
     }
 
+    public Person savePerson(Person person) {
+        return personRepository.save(person);
+    }
+
     public Page<Person> getPersonsPaged(Pageable pageable) {
         return personRepository.findAll(pageable);
     }
 
     public long count() {
         return personRepository.count();
+    }
+
+    public Person findById(Long id) {
+        return personRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        personRepository.deleteById(id);
     }
 }

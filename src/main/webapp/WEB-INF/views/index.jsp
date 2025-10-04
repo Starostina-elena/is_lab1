@@ -6,7 +6,8 @@
     <title>Lab1</title>
 </head>
 <body>
-<h2>Люди</h2>
+<h2>Персонажи</h2>
+<a href="${pageContext.request.contextPath}/persons/create" target="_blank">+</a>
 <table id="personTable">
     <tr>
         <th>ID</th>

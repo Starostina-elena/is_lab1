@@ -41,4 +41,8 @@ public class LocationService {
     public void deleteById(Long id) {
         locationRepository.deleteById(id);
     }
+
+    public Iterable<Location> findAll() {
+        return locationRepository.findAll();
+    }
 }

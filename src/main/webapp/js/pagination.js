@@ -84,7 +84,7 @@ function renderPersonTable(persons) {
     }
     persons.forEach(p => {
         const row = table.insertRow();
-        row.insertCell().textContent = p.id;
+        row.insertCell().innerHTML = `<a href="persons/update/${p.id}" target="_blank">${p.id}</a>`;
         row.insertCell().textContent = p.name;
         row.insertCell().textContent = p.eyeColor;
         row.insertCell().textContent = p.hairColor;

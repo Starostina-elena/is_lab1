@@ -40,7 +40,7 @@ public class Person {
     @Setter
     @Getter
     @NotNull
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
