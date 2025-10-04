@@ -157,7 +157,7 @@ function renderDragonCaveTable(dragonCaves) {
     }
     dragonCaves.forEach(dc => {
         const row = table.insertRow();
-        row.insertCell().textContent = dc.id;
+        row.insertCell().innerHTML = `<a href="dragon_caves/update/${dc.id}" target="_blank">${dc.id}</a>`;
         row.insertCell().textContent = dc.depth;
     });
 }

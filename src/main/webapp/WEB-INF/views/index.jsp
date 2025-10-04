@@ -51,6 +51,7 @@
 <div id="locationPagination"></div>
 
 <h2>Пещеры драконов</h2>
+<a href="${pageContext.request.contextPath}/dragon_caves/create" target="_blank">+</a>
 <table id="dragonCaveTable">
     <tr>
         <th>ID</th>

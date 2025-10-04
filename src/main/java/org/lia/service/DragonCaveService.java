@@ -21,11 +21,23 @@ public class DragonCaveService {
         return dragonCave;
     }
 
+    public DragonCave saveDragonCave(DragonCave dragonCave) {
+        return dragonCaveRepository.save(dragonCave);
+    }
+
     public Page<DragonCave> getDragonCavesPaged(Pageable pageable) {
         return dragonCaveRepository.findAll(pageable);
     }
 
     public long count() {
         return dragonCaveRepository.count();
+    }
+
+    public DragonCave findById(Long id) {
+        return dragonCaveRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        dragonCaveRepository.deleteById(id);
     }
 }
