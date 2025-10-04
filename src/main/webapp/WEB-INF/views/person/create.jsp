@@ -57,7 +57,7 @@
         <label for="location">Локация:</label>
         <form:select path="location">
             <c:forEach var="loc" items="${locationList}">
-                <option value="${loc.id}">${loc.id} - ${loc.name}</option>
+                <option value="${loc.id}" <c:if test="${loc.id == person.location.id}">selected</c:if>>${loc.id} - ${loc.name}</option>
             </c:forEach>
         </form:select>
         <form:errors path="location" cssClass="error" />
