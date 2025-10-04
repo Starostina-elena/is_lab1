@@ -191,7 +191,7 @@ function renderCoordinatesTable(coordinates) {
     }
     coordinates.forEach(c => {
         const row = table.insertRow();
-        row.insertCell().textContent = c.id;
+        row.insertCell().innerHTML = `<a href="coordinates/update/${c.id}" target="_blank">${c.id}</a>`;
         row.insertCell().textContent = c.x;
         row.insertCell().textContent = c.y;
     });

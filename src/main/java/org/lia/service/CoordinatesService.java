@@ -21,11 +21,23 @@ public class CoordinatesService {
         return coordinates;
     }
 
+    public Coordinates saveCoordinates(Coordinates coordinates) {
+        return coordinatesRepository.save(coordinates);
+    }
+
     public Page<Coordinates> getCoordinatesPaged(Pageable pageable) {
         return coordinatesRepository.findAll(pageable);
     }
 
     public long count() {
         return coordinatesRepository.count();
+    }
+
+    public Coordinates findById(Long id) {
+        return coordinatesRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        coordinatesRepository.deleteById(id);
     }
 }

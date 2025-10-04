@@ -69,6 +69,7 @@
 <div id="dragonHeadPagination"></div>
 
 <h2>Координаты</h2>
+<a href="${pageContext.request.contextPath}/coordinates/create" target="_blank">+</a>
 <table id="coordinatesTable">
     <tr>
         <th>ID</th>
