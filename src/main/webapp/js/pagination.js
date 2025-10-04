@@ -37,7 +37,7 @@ function renderPersonTable(persons) {
         row.insertCell().textContent = p.name;
         row.insertCell().textContent = p.eyeColor;
         row.insertCell().textContent = p.hairColor;
-        row.insertCell().textContent = p.location;
+        row.insertCell().textContent = p.location.name;
         row.insertCell().textContent = p.weight;
         row.insertCell().textContent = p.nationality;
     });
@@ -65,15 +65,19 @@ function renderDragonTable(dragons) {
         const row = table.insertRow();
         row.insertCell().textContent = d.id;
         row.insertCell().textContent = d.name;
-        row.insertCell().textContent = d.coordinates;
+        row.insertCell().textContent = d.coordinates.x + ", " + d.coordinates.y;
         row.insertCell().textContent = formatDate(d.creationDate);
-        row.insertCell().textContent = d.cave;
-        row.insertCell().textContent = d.killer;
+        row.insertCell().textContent = d.cave.depth;
+        if (d.killer != null) {
+            row.insertCell().textContent = d.killer.name;
+        } else {
+            row.insertCell().textContent = "-";
+        }
         row.insertCell().textContent = d.age;
         row.insertCell().textContent = d.color;
         row.insertCell().textContent = d.type;
         row.insertCell().textContent = d.character;
-        row.insertCell().textContent = d.head;
+        row.insertCell().textContent = d.head.eyesCount;
     });
 }
 
