@@ -81,7 +81,7 @@ public class Dragon {
     @Setter
     @Getter
     @NotNull
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "dragon_head_id", nullable = false)
     private DragonHead head;
 }

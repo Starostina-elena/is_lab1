@@ -127,4 +127,10 @@ public class LocationController {
         result.put("locations", locations);
         return result;
     }
+
+    @GetMapping("/get_all")
+    @ResponseBody
+    public Iterable<Location> getAllLocations() {
+        return locationService.findAll();
+    }
 }

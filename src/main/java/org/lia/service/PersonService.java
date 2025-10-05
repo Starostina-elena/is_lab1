@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PersonService {
     @Autowired
@@ -87,5 +89,9 @@ public class PersonService {
 
     public Iterable<Person> findPersonsByNameSubstring(String search) {
         return personRepository.findPersonsByNameSubstring(search);
+    }
+
+    public void updatePersonsLocation(List<Long> personIds, long locationId) {
+        personRepository.updatePersonsLocation(personIds, locationId);
     }
 }

@@ -32,6 +32,17 @@
         <span id="killDragonResult"></span>
     </form>
 </div>
+<div>
+    <h3>Отправить команду персонажей в локацию</h3>
+    <form id="sendTeamForm">
+        <label for="teamSelect">Выберите персонажей:</label>
+        <select id="teamSelect" multiple></select>
+        <label for="locationSelect">Выберите локацию:</label>
+        <select id="locationSelect"></select>
+        <button type="submit">Отправить</button>
+        <span id="sendTeamResult"></span>
+    </form>
+</div>
 
 
 <script src="${pageContext.request.contextPath}/js/top_panel.js"></script>

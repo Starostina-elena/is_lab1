@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -163,5 +164,14 @@ public class PersonController {
     @ResponseBody
     public Iterable<Person> getAllPersons() {
         return personService.findAll();
+    }
+
+    @PostMapping("/send_team")
+    @ResponseBody
+    public Map<String, Object> sendTeamToLocation(@RequestParam("personIds") List<Long> personIds, @RequestParam("locationId") long locationId) {
+        personService.updatePersonsLocation(personIds, locationId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", true);
+        return result;
     }
 }

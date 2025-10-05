@@ -30,6 +30,34 @@ function loadKillDragonLists() {
         });
 }
 
+function loadTeamAndLocationLists() {
+    fetch("persons/get_all")
+        .then(response => response.json())
+        .then(persons => {
+            const teamSelect = document.getElementById("teamSelect");
+            teamSelect.innerHTML = "";
+            persons.forEach(person => {
+                const option = document.createElement("option");
+                option.value = person.id;
+                option.textContent = `${person.id} - ${person.name}`;
+                teamSelect.appendChild(option);
+            });
+        });
+
+    fetch("locations/get_all")
+        .then(response => response.json())
+        .then(locations => {
+            const locationSelect = document.getElementById("locationSelect");
+            locationSelect.innerHTML = "";
+            locations.forEach(location => {
+                const option = document.createElement("option");
+                option.value = location.id;
+                option.textContent = `${location.id} - ${location.name}`;
+                locationSelect.appendChild(option);
+            });
+        });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("avgAgeBtn").onclick = function () {
         fetch("dragons/average_age")
@@ -171,6 +199,31 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 document.getElementById("killDragonResult").textContent = data.success ? "Дракон убит!" : "Ошибка!";
                 loadKillDragonLists();
+            });
+    };
+
+    loadTeamAndLocationLists();
+
+    document.getElementById("sendTeamForm").onsubmit = function (e) {
+        e.preventDefault();
+        const personIds = Array.from(document.getElementById("teamSelect").selectedOptions).map(option => option.value);
+        const locationId = document.getElementById("locationSelect").value;
+
+        fetch("persons/send_team", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `personIds=${personIds.join(",")}&locationId=${locationId}`,
+        })
+            .then(response => response.json())
+            .then(result => {
+                const resultSpan = document.getElementById("sendTeamResult");
+                if (result.success) {
+                    resultSpan.textContent = "Команда успешно отправлена!";
+                } else {
+                    resultSpan.textContent = "Ошибка при отправке команды.";
+                }
             });
     };
 });
