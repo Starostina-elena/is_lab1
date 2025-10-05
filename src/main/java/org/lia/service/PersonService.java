@@ -5,10 +5,11 @@ import org.lia.models.person.Person;
 import org.lia.models.utils.Color;
 import org.lia.models.utils.Country;
 import org.lia.models.utils.Location;
-import org.lia.repository.LocationRepository;
 import org.lia.repository.PersonRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,31 @@ public class PersonService {
 
     public Iterable<Person> findByLocationId(Long locationId) {
         return personRepository.findByLocationId(locationId);
+    }
+
+    public Page<Person> getPersonsPagedAndFiltered(Pageable pageable, String filter) {
+        if (filter == null || filter.isEmpty()) {
+            return personRepository.findAll(pageable);
+        }
+        Person probe = new Person();
+        probe.setName(filter);
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Person> example = Example.of(probe, matcher);
+        return personRepository.findAll(example, pageable);
+    }
+
+    public long countFiltered(String filter) {
+        if (filter == null || filter.isEmpty()) {
+            return personRepository.count();
+        }
+        Person probe = new Person();
+        probe.setName(filter);
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Person> example = Example.of(probe, matcher);
+        return personRepository.count(example);
     }
 }

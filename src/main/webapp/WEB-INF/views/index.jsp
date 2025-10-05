@@ -8,6 +8,21 @@
 <body>
 <h2>Персонажи</h2>
 <a href="${pageContext.request.contextPath}/persons/create" target="_blank">+</a>
+
+<label for="personFilter">Фильтр по имени:</label>
+<input type="text" id="personFilter" placeholder="Введите имя персонажа">
+
+<label for="personSort">Сортировка:</label>
+<select id="personSort">
+    <option value="">Без сортировки</option>
+    <option value="name">Имя</option>
+</select>
+<label for="personSortDir">Направление:</label>
+<select id="personSortDir">
+    <option value="asc">Возрастание</option>
+    <option value="desc">Убывание</option>
+</select>
+
 <table id="personTable">
     <tr>
         <th>ID</th>

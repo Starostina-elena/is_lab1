@@ -11,6 +11,7 @@ import org.lia.service.PersonService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +47,19 @@ public class PersonController {
 
     @GetMapping("/get_page")
     @ResponseBody
-    public Map<String, Object> getPersonsPage(@RequestParam(name="page", required=false, defaultValue="0") int page) {
+    public Map<String, Object> getPersonsPage(@RequestParam(name="page", required=false, defaultValue="0") int page,
+                                              @RequestParam(name="sort", required=false) String sort,
+                                              @RequestParam(name="dir", required=false) String dir,
+                                              @RequestParam(name="filter", required=false) String filter) {
 
-        Page<Person> persons = personService.getPersonsPaged(PageRequest.of(page, pageSize));
-        long pageCount = personService.count() / pageSize + (personService.count() % pageSize == 0 ? 0 : 1);
+        Sort ordering = Sort.unsorted();
+        if ("name".equals(sort)) {
+            if ("desc".equalsIgnoreCase(dir)) ordering = Sort.by(Sort.Direction.DESC, "name");
+            else ordering = Sort.by(Sort.Direction.ASC, "name");
+        }
+
+        Page<Person> persons = personService.getPersonsPagedAndFiltered(PageRequest.of(page, pageSize, ordering), filter);
+        long pageCount = personService.countFiltered(filter) / pageSize + (personService.countFiltered(filter) % pageSize == 0 ? 0 : 1);
 
         Map<String, Object> response = new HashMap<>();
         response.put("persons", persons.getContent());

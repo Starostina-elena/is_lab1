@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-    loadPersons(0);
+    loadPersons(0, null, null, "");
     loadDragons(0);
     loadLocations(0);
     loadDragonCaves(0);
     loadDragonHeads(0);
     loadCoordinates(0);
+    setupTableControls();
 });
 
 function formatDate(timestamp) {
@@ -12,12 +13,15 @@ function formatDate(timestamp) {
     return date.toISOString().replace('T', ' ').substring(0, 19);
 }
 
-function loadPersons(page) {
-    fetch(`persons/get_page?page=${page}`)
+function loadPersons(page, sortKey, sortDir, filter) {
+    const sortParam = sortKey ? `&sort=${sortKey}` : '';
+    const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
+    const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
+    fetch(`persons/get_page?page=${page}${sortParam}${dirParam}${filterParam}`)
         .then(res => res.json())
         .then(data => {
             renderPersonTable(data.persons);
-            renderPersonPagination(data.pageCount, page);
+            renderPersonPagination(data.pageCount, page, sortKey, sortDir, filter);
         });
 }
 
@@ -66,38 +70,33 @@ function loadCoordinates(page) {
         });
 }
 
-function renderPagination(container, totalPages, currentPage, loadFunction) {
-    container.innerHTML = '';
-    for (let i = 0; i < totalPages; i++) {
-        const btn = document.createElement("button");
-        btn.textContent = i + 1;
-        btn.disabled = i === currentPage;
-        btn.onclick = () => loadFunction(i);
-        container.appendChild(btn);
-    }
-}
-
 function renderPersonTable(persons) {
     const table = document.getElementById("personTable");
     while (table.rows.length > 1) {
         table.deleteRow(1);
     }
-    persons.forEach(p => {
+    persons.forEach(person => {
         const row = table.insertRow();
-        row.insertCell().innerHTML = `<a href="persons/update/${p.id}" target="_blank">${p.id}</a>`;
-        row.insertCell().textContent = p.name;
-        row.insertCell().textContent = p.eyeColor;
-        row.insertCell().textContent = p.hairColor;
-        row.insertCell().textContent = p.location.name;
-        row.insertCell().textContent = p.weight;
-        row.insertCell().textContent = p.nationality;
+        row.insertCell().innerHTML = `<a href="persons/update/${person.id}" target="_blank">${person.id}</a>`;
+        row.insertCell().textContent = person.name;
+        row.insertCell().textContent = person.eyeColor;
+        row.insertCell().textContent = person.hairColor;
+        row.insertCell().textContent = person.location ? person.location.name : '-';
+        row.insertCell().textContent = person.weight;
+        row.insertCell().textContent = person.nationality;
     });
 }
 
-
-function renderPersonPagination(totalPages, currentPage) {
+function renderPersonPagination(totalPages, currentPage, sortKey, sortDir, filter) {
     const container = document.getElementById("personPagination");
-    renderPagination(container, totalPages, currentPage, loadPersons);
+    container.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i + 1;
+        btn.disabled = i === currentPage;
+        btn.onclick = () => loadPersons(i, sortKey, sortDir, filter);
+        container.appendChild(btn);
+    }
 }
 
 function renderDragonTable(dragons) {
@@ -200,4 +199,40 @@ function renderCoordinatesTable(coordinates) {
 function renderCoordinatesPagination(totalPages, currentPage) {
     const container = document.getElementById("coordinatesPagination");
     renderPagination(container, totalPages, currentPage, loadCoordinates);
+}
+
+function renderPagination(container, totalPages, currentPage, loadFunction) {
+    container.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i + 1;
+        btn.disabled = i === currentPage;
+        btn.onclick = () => loadFunction(i);
+        container.appendChild(btn);
+    }
+}
+
+function setupTableControls() {
+    const personFilter = document.getElementById('personFilter');
+    const personSort = document.getElementById('personSort');
+    const personSortDir = document.getElementById('personSortDir');
+
+    if (personFilter) personFilter.addEventListener('input', () => {
+        const filter = personFilter.value;
+        loadPersons(0, personSort ? personSort.value : null, personSortDir ? personSortDir.value : null, filter);
+    });
+
+    if (personSort) personSort.addEventListener('change', () => {
+        const sortKey = personSort.value;
+        const sortDir = personSortDir ? personSortDir.value : 'asc';
+        const filter = personFilter ? personFilter.value : '';
+        loadPersons(0, sortKey, sortDir, filter);
+    });
+
+    if (personSortDir) personSortDir.addEventListener('change', () => {
+        const sortKey = personSort ? personSort.value : null;
+        const sortDir = personSortDir.value;
+        const filter = personFilter ? personFilter.value : '';
+        loadPersons(0, sortKey, sortDir, filter);
+    });
 }
