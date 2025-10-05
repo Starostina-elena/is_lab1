@@ -2,8 +2,10 @@ package org.lia.controller;
 
 
 import org.lia.controller.editor.LocationEditor;
+import org.lia.models.dragon.Dragon;
 import org.lia.models.person.Person;
 import org.lia.models.utils.Color;
+import org.lia.service.DragonService;
 import org.lia.service.LocationService;
 import org.lia.service.PersonService;
 import org.springframework.data.domain.Page;
@@ -26,11 +28,14 @@ import java.util.Map;
 public class PersonController {
     private final PersonService personService;
     private final LocationService locationService;
+    private final DragonService dragonService;
     int pageSize = 10;
 
-    public PersonController(PersonService personService, LocationService locationService) {
+    public PersonController(PersonService personService, LocationService locationService,
+                            DragonService dragonService) {
         this.personService = personService;
         this.locationService = locationService;
+        this.dragonService = dragonService;
     }
 
     @InitBinder
@@ -84,12 +89,16 @@ public class PersonController {
         model.addAttribute("colorList", Color.values());
         model.addAttribute("nationalityList", org.lia.models.utils.Country.values());
         model.addAttribute("locationList", locationService.findAll());
+        Iterable<Dragon> dragons = dragonService.findByKillerId(id);
+        model.addAttribute("dragonsWithKiller", dragons);
         return "person/create";
     }
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, @Valid @ModelAttribute Person person, BindingResult bindingResult, Model model) {
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByKillerId(id);
+        model.addAttribute("dragonsWithKiller", dragons);
         if (bindingResult.hasErrors()) {
             model.addAttribute("person", person);
             model.addAttribute("colorList", Color.values());
