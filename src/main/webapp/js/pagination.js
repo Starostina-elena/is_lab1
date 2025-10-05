@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
     loadPersons(0, null, null, "");
     loadDragons(0, null, null, "");
-    loadLocations(0);
+    loadLocations(0, null, null, "");
     loadDragonCaves(0);
     loadDragonHeads(0);
     loadCoordinates(0);
-    setupTableControls();
+    setupPersonTableControls();
     setupDragonTableControls();
+    setupLocationTableControls();
 });
 
 function formatDate(timestamp) {
@@ -38,12 +39,15 @@ function loadDragons(page, sortKey, sortDir, filter) {
         });
 }
 
-function loadLocations(page) {
-    fetch(`locations/get_page?page=${page}`)
+function loadLocations(page, sortKey, sortDir, filter) {
+    const sortParam = sortKey ? `&sort=${sortKey}` : '';
+    const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
+    const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
+    fetch(`locations/get_page?page=${page}${sortParam}${dirParam}${filterParam}`)
         .then(res => res.json())
         .then(data => {
             renderLocationTable(data.locations);
-            renderLocationPagination(data.pageCount, page);
+            renderLocationPagination(data.pageCount, page, sortKey, sortDir, filter);
         });
 }
 
@@ -157,7 +161,14 @@ function renderLocationTable(locations) {
 
 function renderLocationPagination(totalPages, currentPage) {
     const container = document.getElementById("locationPagination");
-    renderPagination(container, totalPages, currentPage, loadLocations);
+    container.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i + 1;
+        btn.disabled = i === currentPage;
+        btn.onclick = () => loadLocations(i, sortKey, sortDir, filter);
+        container.appendChild(btn);
+    }
 }
 
 function renderDragonCaveTable(dragonCaves) {
@@ -223,7 +234,7 @@ function renderPagination(container, totalPages, currentPage, loadFunction) {
     }
 }
 
-function setupTableControls() {
+function setupPersonTableControls() {
     const personFilter = document.getElementById('personFilter');
     const personSort = document.getElementById('personSort');
     const personSortDir = document.getElementById('personSortDir');
@@ -270,5 +281,30 @@ function setupDragonTableControls() {
         const sortDir = dragonSortDir.value;
         const filter = dragonFilter ? dragonFilter.value : '';
         loadDragons(0, sortKey, sortDir, filter);
+    });
+}
+
+function setupLocationTableControls() {
+    const locationFilter = document.getElementById('locationFilter');
+    const locationSort = document.getElementById('locationSort');
+    const locationSortDir = document.getElementById('locationSortDir');
+
+    if (locationFilter) locationFilter.addEventListener('input', () => {
+        const filter = locationFilter.value;
+        loadLocations(0, locationSort ? locationSort.value : null, locationSortDir ? locationSortDir.value : null, filter);
+    });
+
+    if (locationSort) locationSort.addEventListener('change', () => {
+        const sortKey = locationSort.value;
+        const sortDir = locationSortDir ? locationSortDir.value : 'asc';
+        const filter = locationFilter ? locationFilter.value : '';
+        loadLocations(0, sortKey, sortDir, filter);
+    });
+
+    if (locationSortDir) locationSortDir.addEventListener('change', () => {
+        const sortKey = locationSort ? locationSort.value : null;
+        const sortDir = locationSortDir.value;
+        const filter = locationFilter ? locationFilter.value : '';
+        loadLocations(0, sortKey, sortDir, filter);
     });
 }

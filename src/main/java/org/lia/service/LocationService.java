@@ -1,10 +1,12 @@
 package org.lia.service;
 
+import org.lia.models.dragon.Dragon;
 import org.lia.models.utils.Location;
 import org.lia.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,5 +46,21 @@ public class LocationService {
 
     public Iterable<Location> findAll() {
         return locationRepository.findAll();
+    }
+
+    public Page<Location> getLocationsPagedAndFiltered(Pageable pageable, String filter) {
+        Specification<Location> spec = Specification.where(null);
+        if (filter != null && !filter.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + filter.toLowerCase() + "%"));
+        }
+        return locationRepository.findAll(spec, pageable);
+    }
+
+    public long countFiltered(String filter) {
+        Specification<Location> spec = Specification.where(null);
+        if (filter != null && !filter.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + filter.toLowerCase() + "%"));
+        }
+        return locationRepository.count(spec);
     }
 }

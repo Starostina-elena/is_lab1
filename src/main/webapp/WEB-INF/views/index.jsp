@@ -71,6 +71,18 @@
 
 <h2>Локации</h2>
 <a href="${pageContext.request.contextPath}/locations/create" target="_blank">+</a>
+<label for="locationFilter">Фильтр по названию:</label>
+<input type="text" id="locationFilter" placeholder="Введите название локации">
+<label for="locationSort">Сортировка:</label>
+<select id="locationSort">
+    <option value="">Без сортировки</option>
+    <option value="name">Название</option>
+</select>
+<label for="locationSortDir">Направление:</label>
+<select id="locationSortDir">
+    <option value="asc">Возрастание</option>
+    <option value="desc">Убывание</option>
+</select>
 <table id="locationTable">
     <tr>
         <th>ID</th>
