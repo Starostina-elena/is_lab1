@@ -162,6 +162,15 @@ public class DragonController {
         return result;
     }
 
+    @GetMapping("/count_head_less_than")
+    @ResponseBody
+    public Map<String, Object> countHeadLessThan(@RequestParam("maxId") int maxId) {
+        int count = dragonService.countDragonsWithHeadLessThan(maxId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("count", count);
+        return result;
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(org.lia.models.dragon.DragonHead.class, new DragonHeadEditor(dragonHeadService));

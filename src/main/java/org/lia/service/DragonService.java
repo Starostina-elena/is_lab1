@@ -94,4 +94,8 @@ public class DragonService {
         return dragonRepository.getAverageAge();
     }
 
+    public int countDragonsWithHeadLessThan(int maxId) {
+        return dragonRepository.countDragonsWithHeadLessThan(maxId);
+    }
+
 }
