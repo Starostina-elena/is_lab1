@@ -50,7 +50,7 @@ public class DragonCaveController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute DragonCave dragonCave, BindingResult bindingResult, Model model) {
+    public String create(@Valid @ModelAttribute DragonCave dragonCave, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "dragonCave/create";
         }

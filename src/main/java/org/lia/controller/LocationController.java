@@ -61,7 +61,7 @@ public class LocationController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute Location location, BindingResult bindingResult, Model model) {
+    public String create(@Valid @ModelAttribute Location location, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "location/create";
         }

@@ -2,7 +2,6 @@ package org.lia.service;
 
 import org.lia.models.utils.Coordinates;
 import org.lia.repository.CoordinatesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,14 +13,6 @@ public class CoordinatesService {
 
     public CoordinatesService(CoordinatesRepository coordinatesRepository) {
         this.coordinatesRepository = coordinatesRepository;
-    }
-
-    public Coordinates saveCoordinates(Integer x, Long y) {
-        Coordinates coordinates = new Coordinates();
-        coordinates.setX(x);
-        coordinates.setY(y);
-        coordinatesRepository.save(coordinates);
-        return coordinates;
     }
 
     public Coordinates saveCoordinates(Coordinates coordinates) {

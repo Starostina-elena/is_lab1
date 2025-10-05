@@ -3,7 +3,6 @@ package org.lia.service;
 import org.lia.models.dragon.DragonCave;
 import org.lia.repository.DragonCaveRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,13 +13,6 @@ public class DragonCaveService {
 
     public DragonCaveService(DragonCaveRepository dragonCaveRepository) {
         this.dragonCaveRepository = dragonCaveRepository;
-    }
-
-    public DragonCave saveDragonCave(Integer depth) {
-        DragonCave dragonCave = new DragonCave();
-        dragonCave.setDepth(depth);
-        dragonCaveRepository.save(dragonCave);
-        return dragonCave;
     }
 
     public DragonCave saveDragonCave(DragonCave dragonCave) {

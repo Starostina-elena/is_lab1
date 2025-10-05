@@ -3,7 +3,6 @@ package org.lia.service;
 import org.lia.models.dragon.DragonHead;
 import org.lia.repository.DragonHeadRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,13 +13,6 @@ public class DragonHeadService {
 
     public DragonHeadService(DragonHeadRepository dragonHeadRepository) {
         this.dragonHeadRepository = dragonHeadRepository;
-    }
-
-    public DragonHead saveDragonHead(Integer eyesCount) {
-        DragonHead dragonHead = new DragonHead();
-        dragonHead.setEyesCount(eyesCount);
-        dragonHeadRepository.save(dragonHead);
-        return dragonHead;
     }
 
     public DragonHead saveDragonHead(DragonHead dragonHead) {

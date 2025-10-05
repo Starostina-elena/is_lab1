@@ -10,7 +10,6 @@ import org.lia.models.utils.DragonType;
 import org.lia.repository.DragonRepository;
 import org.lia.models.utils.Color;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,29 +23,8 @@ public class DragonService {
         this.dragonRepository = dragonRepository;
     }
 
-    public Dragon saveDragon(String name, Coordinates coordinates,
-                           DragonCave cave, Person killer, long age, Color color, DragonType type,
-                           DragonCharacter character, DragonHead head) {
-        Dragon dragon = new Dragon();
-        dragon.setName(name);
-        dragon.setCoordinates(coordinates);
-        dragon.setCave(cave);
-        dragon.setKiller(killer);
-        dragon.setAge(age);
-        dragon.setColor(color);
-        dragon.setType(type);
-        dragon.setCharacter(character);
-        dragon.setHead(head);
-        dragonRepository.save(dragon);
-        return dragon;
-    }
-
     public Dragon saveDragon(Dragon dragon) {
         return dragonRepository.save(dragon);
-    }
-
-    public Page<Dragon> getDragonsPaged(Pageable pageable) {
-        return dragonRepository.findAll(pageable);
     }
 
     public long count() {

@@ -57,7 +57,7 @@ public class CoordinatesController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute Coordinates coordinates, BindingResult bindingResult, Model model) {
+    public String create(@Valid @ModelAttribute Coordinates coordinates, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "coordinates/create";
         }
