@@ -158,4 +158,10 @@ public class PersonController {
         result.put("persons", persons);
         return result;
     }
+
+    @GetMapping("/get_all")
+    @ResponseBody
+    public Iterable<Person> getAllPersons() {
+        return personService.findAll();
+    }
 }

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 
 public interface DragonRepository extends JpaRepository<Dragon, Long>, JpaSpecificationExecutor<Dragon> {
     Iterable<Dragon> findByCoordinatesId(Long coordinatesId);
@@ -21,4 +23,8 @@ public interface DragonRepository extends JpaRepository<Dragon, Long>, JpaSpecif
     @Query(value = "SELECT * FROM find_dragons_by_name_substring(:search)", nativeQuery = true)
     Iterable<Dragon> findDragonsByNameSubstring(@Param("search") String search);
 
+    @Query(value = "SELECT kill_dragon(:dragonId, :killerId)", nativeQuery = true)
+    int killDragon(@Param("dragonId") long dragonId, @Param("killerId") long killerId);
+
+    Iterable<Dragon> findByKillerIdIsNull();
 }

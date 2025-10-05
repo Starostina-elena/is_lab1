@@ -101,5 +101,10 @@ public class DragonService {
     public Iterable<Dragon> findDragonsByNameSubstring(String search) {
         return dragonRepository.findDragonsByNameSubstring(search);
     }
-
+    public void killDragon(long dragonId, long killerId) {
+        dragonRepository.killDragon(dragonId, killerId);
+    }
+    public Iterable<Dragon> findDragonsWithoutKiller() {
+        return dragonRepository.findByKillerIdIsNull();
+    }
 }

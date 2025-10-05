@@ -3,6 +3,33 @@ function formatDate(timestamp) {
     return date.toISOString().replace('T', ' ').substring(0, 19);
 }
 
+function loadKillDragonLists() {
+    fetch("dragons/get_without_killer")
+        .then(res => res.json())
+        .then(dragons => {
+            const select = document.getElementById("killDragonSelect");
+            select.innerHTML = "";
+            dragons.forEach(d => {
+                const option = document.createElement("option");
+                option.value = d.id;
+                option.textContent = `${d.id} - ${d.name}`;
+                select.appendChild(option);
+            });
+        });
+    fetch("persons/get_all")
+        .then(res => res.json())
+        .then(persons => {
+            const select = document.getElementById("killerSelect");
+            select.innerHTML = "";
+            persons.forEach(p => {
+                const option = document.createElement("option");
+                option.value = p.id;
+                option.textContent = `${p.id} - ${p.name}`;
+                select.appendChild(option);
+            });
+        });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("avgAgeBtn").onclick = function () {
         fetch("dragons/average_age")
@@ -127,6 +154,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     html += `</table>`;
                 }
                 container.innerHTML = html;
+            });
+    };
+
+    loadKillDragonLists();
+    document.getElementById("killDragonForm").onsubmit = function(e) {
+        e.preventDefault();
+        const dragonId = document.getElementById("killDragonSelect").value;
+        const killerId = document.getElementById("killerSelect").value;
+        fetch("dragons/kill", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: `dragonId=${encodeURIComponent(dragonId)}&killerId=${encodeURIComponent(killerId)}`
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("killDragonResult").textContent = data.success ? "Дракон убит!" : "Ошибка!";
+                loadKillDragonLists();
             });
     };
 });

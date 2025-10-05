@@ -180,6 +180,21 @@ public class DragonController {
         return result;
     }
 
+    @PostMapping("/kill")
+    @ResponseBody
+    public Map<String, Object> killDragon(@RequestParam("dragonId") long dragonId, @RequestParam("killerId") long killerId) {
+        dragonService.killDragon(dragonId, killerId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", true);
+        return result;
+    }
+
+    @GetMapping("/get_without_killer")
+    @ResponseBody
+    public Iterable<Dragon> getDragonsWithoutKiller() {
+        return dragonService.findDragonsWithoutKiller();
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(org.lia.models.dragon.DragonHead.class, new DragonHeadEditor(dragonHeadService));
