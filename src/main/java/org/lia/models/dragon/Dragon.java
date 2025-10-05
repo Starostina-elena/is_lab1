@@ -47,7 +47,7 @@ public class Dragon {
     @Setter
     @Getter
     @NotNull
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "dragon_cave_id", nullable = false)
     private DragonCave cave;
 

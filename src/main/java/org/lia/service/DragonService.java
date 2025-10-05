@@ -56,4 +56,8 @@ public class DragonService {
     public void deleteById(Long id) {
         dragonRepository.deleteById(id);
     }
+
+    public Iterable<Dragon> findByCoordinatesId(Long coordinatesId) {
+        return dragonRepository.findByCoordinatesId(coordinatesId);
+    }
 }

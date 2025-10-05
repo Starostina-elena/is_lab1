@@ -41,5 +41,50 @@
         <button type="submit" onclick="return confirm('Удалить координаты?');">Удалить</button>
     </form>
 </c:if>
+
+<c:if test="${editId != null}">
+    <c:if test="${not empty dragonsWithCoordinates}">
+            <h3>Драконы с этими координатами:</h3>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Координаты</th>
+                    <th>Дата создания</th>
+                    <th>Пещера</th>
+                    <th>Убийца</th>
+                    <th>Возраст</th>
+                    <th>Цвет</th>
+                    <th>Тип</th>
+                    <th>Характер</th>
+                    <th>Голова</th>
+                </tr>
+                <c:forEach var="dragon" items="${dragonsWithCoordinates}">
+                    <tr>
+                        <td><a href="${pageContext.request.contextPath}/dragons/update/${dragon.id}" target="_blank">${dragon.id}</a></td>
+                        <td>${dragon.name}</td>
+                        <td>${dragon.coordinates.id}</td>
+                        <td id="dragon-date">${dragon.creationDate}</td>
+                        <td>${dragon.cave.id}</td>
+                        <td>${dragon.killer.name}</td>
+                        <td>${dragon.age}</td>
+                        <td>${dragon.color}</td>
+                        <td>${dragon.type}</td>
+                        <td>${dragon.character}</td>
+                        <td>${dragon.head.id}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+    </c:if>
+</c:if>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        span = document.getElementById('dragon-date');
+        if (span) {
+            var dateStr = span.textContent.trim();
+            span.textContent = dateStr.replace('T', ' ').substring(0, 19);
+        }
+    });
+</script>
 </body>
 </html>

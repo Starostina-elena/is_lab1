@@ -1,7 +1,9 @@
 package org.lia.controller;
 
 import org.lia.models.utils.Coordinates;
+import org.lia.models.dragon.Dragon;
 import org.lia.service.CoordinatesService;
+import org.lia.service.DragonService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -26,10 +28,12 @@ import java.util.Map;
 @RequestMapping("/coordinates")
 public class CoordinatesController {
     private final CoordinatesService coordinatesService;
+    private final DragonService dragonService;
     int pageSize = 10;
 
-    public CoordinatesController(CoordinatesService coordinatesService) {
+    public CoordinatesController(CoordinatesService coordinatesService, DragonService dragonService) {
         this.coordinatesService = coordinatesService;
+        this.dragonService = dragonService;
     }
 
     @GetMapping("/get_page")
@@ -68,6 +72,8 @@ public class CoordinatesController {
         }
         model.addAttribute("coordinates", coordinates);
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByCoordinatesId(id);
+        model.addAttribute("dragonsWithCoordinates", dragons);
         return "coordinates/create";
     }
 
