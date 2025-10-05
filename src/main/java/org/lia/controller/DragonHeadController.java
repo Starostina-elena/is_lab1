@@ -1,7 +1,9 @@
 package org.lia.controller;
 
+import org.lia.models.dragon.Dragon;
 import org.lia.models.dragon.DragonHead;
 import org.lia.service.DragonHeadService;
+import org.lia.service.DragonService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,12 @@ import java.util.Map;
 @RequestMapping("/dragon_heads")
 public class DragonHeadController {
     private final DragonHeadService dragonHeadService;
+    private final DragonService dragonService;
     int pageSize = 10;
 
-    public DragonHeadController(DragonHeadService dragonHeadService) {
+    public DragonHeadController(DragonHeadService dragonHeadService, DragonService dragonService) {
         this.dragonHeadService = dragonHeadService;
+        this.dragonService = dragonService;
     }
 
     @GetMapping("/get_page")
@@ -61,12 +65,16 @@ public class DragonHeadController {
         }
         model.addAttribute("dragonHead", dragonHead);
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByHeadId(id);
+        model.addAttribute("dragonsWithHead", dragons);
         return "dragonHead/create";
     }
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, @Valid @ModelAttribute DragonHead dragonHead, BindingResult bindingResult, Model model) {
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByHeadId(id);
+        model.addAttribute("dragonsWithHead", dragons);
         if (bindingResult.hasErrors()) {
             model.addAttribute("dragonHead", dragonHead);
             return "dragonHead/create";

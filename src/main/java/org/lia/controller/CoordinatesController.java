@@ -80,6 +80,8 @@ public class CoordinatesController {
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, @Valid @ModelAttribute Coordinates coordinates, BindingResult bindingResult, Model model) {
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByCoordinatesId(id);
+        model.addAttribute("dragonsWithCoordinates", dragons);
         if (bindingResult.hasErrors()) {
             model.addAttribute("coordinates", coordinates);
             return "coordinates/create";

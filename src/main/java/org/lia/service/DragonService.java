@@ -60,4 +60,16 @@ public class DragonService {
     public Iterable<Dragon> findByCoordinatesId(Long coordinatesId) {
         return dragonRepository.findByCoordinatesId(coordinatesId);
     }
+
+    public Iterable<Dragon> findByCaveId(Long caveId) {
+        return dragonRepository.findByCaveId(caveId);
+    }
+
+    public Iterable<Dragon> findByKillerId(Long killerId) {
+        return dragonRepository.findByKillerId(killerId);
+    }
+
+    public Iterable<Dragon> findByHeadId(Long headId) {
+        return dragonRepository.findByHeadId(headId);
+    }
 }
