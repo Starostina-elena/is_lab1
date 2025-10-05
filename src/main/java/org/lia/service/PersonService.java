@@ -2,9 +2,6 @@ package org.lia.service;
 
 
 import org.lia.models.person.Person;
-import org.lia.models.utils.Color;
-import org.lia.models.utils.Country;
-import org.lia.models.utils.Location;
 import org.lia.repository.PersonRepository;
 
 import org.springframework.data.domain.Example;

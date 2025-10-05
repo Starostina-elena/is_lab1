@@ -1,14 +1,7 @@
 package org.lia.service;
 
 import org.lia.models.dragon.Dragon;
-import org.lia.models.dragon.DragonCave;
-import org.lia.models.dragon.DragonHead;
-import org.lia.models.person.Person;
-import org.lia.models.utils.Coordinates;
-import org.lia.models.utils.DragonCharacter;
-import org.lia.models.utils.DragonType;
 import org.lia.repository.DragonRepository;
-import org.lia.models.utils.Color;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
