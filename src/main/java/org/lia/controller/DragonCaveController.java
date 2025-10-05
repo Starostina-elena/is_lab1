@@ -1,7 +1,9 @@
 package org.lia.controller;
 
+import org.lia.models.dragon.Dragon;
 import org.lia.models.dragon.DragonCave;
 import org.lia.service.DragonCaveService;
+import org.lia.service.DragonService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,12 @@ import java.util.Map;
 @RequestMapping("/dragon_caves")
 public class DragonCaveController {
     private final DragonCaveService dragonCaveService;
+    private final DragonService dragonService;
     int pageSize = 10;
 
-    public DragonCaveController(DragonCaveService dragonCaveService) {
+    public DragonCaveController(DragonCaveService dragonCaveService, DragonService dragonService) {
         this.dragonCaveService = dragonCaveService;
+        this.dragonService = dragonService;
     }
 
     @GetMapping("/get_page")
@@ -61,12 +65,16 @@ public class DragonCaveController {
         }
         model.addAttribute("dragonCave", dragonCave);
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByCaveId(id);
+        model.addAttribute("dragonsWithCave", dragons);
         return "dragonCave/create";
     }
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, @Valid @ModelAttribute DragonCave dragonCave, BindingResult bindingResult, Model model) {
         model.addAttribute("editId", id);
+        Iterable<Dragon> dragons = dragonService.findByCaveId(id);
+        model.addAttribute("dragonsWithCave", dragons);
         if (bindingResult.hasErrors()) {
             model.addAttribute("dragonCave", dragonCave);
             return "dragonCave/create";
