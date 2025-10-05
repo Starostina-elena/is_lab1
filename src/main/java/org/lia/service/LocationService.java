@@ -63,4 +63,8 @@ public class LocationService {
         }
         return locationRepository.count(spec);
     }
+
+    public Iterable<Location> findLocationsByNameSubstring(String search) {
+        return locationRepository.findLocationsByNameSubstring(search);
+    }
 }

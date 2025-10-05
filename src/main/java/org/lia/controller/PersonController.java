@@ -149,4 +149,13 @@ public class PersonController {
             return "person/create";
         }
     }
+
+    @GetMapping("/search_by_name")
+    @ResponseBody
+    public Map<String, Object> searchByName(@RequestParam("search") String search) {
+        Iterable<Person> persons = personService.findPersonsByNameSubstring(search);
+        Map<String, Object> result = new HashMap<>();
+        result.put("persons", persons);
+        return result;
+    }
 }

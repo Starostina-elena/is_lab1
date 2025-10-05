@@ -98,4 +98,8 @@ public class DragonService {
         return dragonRepository.countDragonsWithHeadLessThan(maxId);
     }
 
+    public Iterable<Dragon> findDragonsByNameSubstring(String search) {
+        return dragonRepository.findDragonsByNameSubstring(search);
+    }
+
 }

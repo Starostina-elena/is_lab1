@@ -17,4 +17,8 @@ public interface DragonRepository extends JpaRepository<Dragon, Long>, JpaSpecif
 
     @Query(value = "SELECT count_dragons_with_head_less_than(:maxId)", nativeQuery = true)
     int countDragonsWithHeadLessThan(@Param("maxId") int maxId);
+
+    @Query(value = "SELECT * FROM find_dragons_by_name_substring(:search)", nativeQuery = true)
+    Iterable<Dragon> findDragonsByNameSubstring(@Param("search") String search);
+
 }

@@ -84,4 +84,8 @@ public class PersonService {
         Example<Person> example = Example.of(probe, matcher);
         return personRepository.count(example);
     }
+
+    public Iterable<Person> findPersonsByNameSubstring(String search) {
+        return personRepository.findPersonsByNameSubstring(search);
+    }
 }

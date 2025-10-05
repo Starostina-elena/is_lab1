@@ -171,6 +171,15 @@ public class DragonController {
         return result;
     }
 
+    @GetMapping("/search_by_name")
+    @ResponseBody
+    public Map<String, Object> searchByName(@RequestParam("search") String search) {
+        Iterable<Dragon> dragons = dragonService.findDragonsByNameSubstring(search);
+        Map<String, Object> result = new HashMap<>();
+        result.put("dragons", dragons);
+        return result;
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(org.lia.models.dragon.DragonHead.class, new DragonHeadEditor(dragonHeadService));

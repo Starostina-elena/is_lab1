@@ -14,6 +14,13 @@
     <button id="countHeadIdBtn">Посчитать драконов с head, меньше заданного</button>
     <span id="countHeadIdResult"></span>
 </div>
+<div>
+    <input type="text" id="searchSubstringInput" placeholder="Найти по имени">
+    <button id="searchAllBtn">Найти объекты</button>
+    <div id="searchResultsDragon"></div>
+    <div id="searchResultsPerson"></div>
+    <div id="searchResultsLocation"></div>
+</div>
 
 <script src="${pageContext.request.contextPath}/js/top_panel.js"></script>
 </body>

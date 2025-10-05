@@ -118,4 +118,13 @@ public class LocationController {
             return "location/create";
         }
     }
+
+    @GetMapping("/search_by_name")
+    @ResponseBody
+    public Map<String, Object> searchByName(@RequestParam("search") String search) {
+        Iterable<Location> locations = locationService.findLocationsByNameSubstring(search);
+        Map<String, Object> result = new HashMap<>();
+        result.put("locations", locations);
+        return result;
+    }
 }
