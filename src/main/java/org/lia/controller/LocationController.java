@@ -1,11 +1,11 @@
 package org.lia.controller;
 
 
-import org.lia.models.dragon.Dragon;
 import org.lia.models.person.Person;
 import org.lia.models.utils.Location;
 import org.lia.service.LocationService;
 import org.lia.service.PersonService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -94,8 +94,18 @@ public class LocationController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        locationService.deleteById(id);
-        return "redirect:/";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            locationService.deleteById(id);
+            return "redirect:/";
+        } catch (DataIntegrityViolationException e) {
+            Location location = locationService.findById(id);
+            model.addAttribute("location", location);
+            model.addAttribute("editId", id);
+            Iterable<Person> persons = personService.findByLocationId(id);
+            model.addAttribute("personsWithLocation", persons);
+            model.addAttribute("deleteError", "Удаление невозможно: локация занята персонажами.");
+            return "location/create";
+        }
     }
 }

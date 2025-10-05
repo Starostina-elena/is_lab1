@@ -4,6 +4,7 @@ import org.lia.models.utils.Coordinates;
 import org.lia.models.dragon.Dragon;
 import org.lia.service.CoordinatesService;
 import org.lia.service.DragonService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -97,9 +98,19 @@ public class CoordinatesController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        coordinatesService.deleteById(id);
-        return "redirect:/";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            coordinatesService.deleteById(id);
+            return "redirect:/";
+        } catch (DataIntegrityViolationException e) {
+            Coordinates coordinates = coordinatesService.findById(id);
+            model.addAttribute("coordinates", coordinates);
+            model.addAttribute("editId", id);
+            Iterable<Dragon> dragons = dragonService.findByCoordinatesId(id);
+            model.addAttribute("dragonsWithCoordinates", dragons);
+            model.addAttribute("deleteError", "Удаление невозможно: координаты заняты драконом.");
+            return "coordinates/create";
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import org.lia.models.utils.Color;
 import org.lia.service.DragonService;
 import org.lia.service.LocationService;
 import org.lia.service.PersonService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -121,8 +122,21 @@ public class PersonController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        personService.deleteById(id);
-        return "redirect:/";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            personService.deleteById(id);
+            return "redirect:/";
+        } catch (DataIntegrityViolationException e) {
+            Person person = personService.findById(id);
+            model.addAttribute("person", person);
+            model.addAttribute("editId", id);
+            model.addAttribute("colorList", Color.values());
+            model.addAttribute("nationalityList", org.lia.models.utils.Country.values());
+            model.addAttribute("locationList", locationService.findAll());
+            Iterable<Dragon> dragons = dragonService.findByKillerId(id);
+            model.addAttribute("dragonsWithKiller", dragons);
+            model.addAttribute("deleteError", "Удаление невозможно: есть связанные (убитые) драконы.");
+            return "person/create";
+        }
     }
 }

@@ -4,10 +4,6 @@
 <html>
 <head>
     <title>Координаты</title>
-    <style>
-        .error { color: red; font-size: 0.9em; }
-        .field { margin-bottom: 10px; }
-    </style>
 </head>
 <body>
 <h2><c:choose><c:when test="${editId != null}">Редактировать координаты</c:when><c:otherwise>Создать координаты</c:otherwise></c:choose></h2>
@@ -40,6 +36,10 @@
     <form method="post" action="${pageContext.request.contextPath}/coordinates/delete/${editId}" style="margin-top:10px;">
         <button type="submit" onclick="return confirm('Удалить координаты?');">Удалить</button>
     </form>
+</c:if>
+
+<c:if test="${not empty deleteError}">
+    <div class="error" style="margin-bottom:10px;">${deleteError}</div>
 </c:if>
 
 <c:if test="${editId != null}">

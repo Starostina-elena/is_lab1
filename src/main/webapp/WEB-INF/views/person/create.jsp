@@ -71,6 +71,10 @@
     </form>
 </c:if>
 
+<c:if test="${not empty deleteError}">
+    <div class="error" style="margin-bottom:10px;">${deleteError}</div>
+</c:if>
+
 <c:if test="${editId != null}">
     <c:if test="${not empty dragonsWithKiller}">
         <h3>Драконы, убитые этим персонажем:</h3>

@@ -4,6 +4,7 @@ import org.lia.models.dragon.Dragon;
 import org.lia.models.dragon.DragonHead;
 import org.lia.service.DragonHeadService;
 import org.lia.service.DragonService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -89,8 +90,18 @@ public class DragonHeadController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        dragonHeadService.deleteById(id);
-        return "redirect:/";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            dragonHeadService.deleteById(id);
+            return "redirect:/";
+        } catch (DataIntegrityViolationException e) {
+            DragonHead dragonHead = dragonHeadService.findById(id);
+            model.addAttribute("dragonHead", dragonHead);
+            model.addAttribute("editId", id);
+            Iterable<Dragon> dragons = dragonService.findByHeadId(id);
+            model.addAttribute("dragonsWithHead", dragons);
+            model.addAttribute("deleteError", "Удаление невозможно: у головы есть дракон.");
+            return "dragonHead/create";
+        }
     }
 }

@@ -4,6 +4,7 @@ import org.lia.models.dragon.Dragon;
 import org.lia.models.dragon.DragonCave;
 import org.lia.service.DragonCaveService;
 import org.lia.service.DragonService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -89,8 +90,18 @@ public class DragonCaveController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        dragonCaveService.deleteById(id);
-        return "redirect:/";
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            dragonCaveService.deleteById(id);
+            return "redirect:/";
+        } catch (DataIntegrityViolationException e) {
+            DragonCave dragonCave = dragonCaveService.findById(id);
+            model.addAttribute("dragonCave", dragonCave);
+            model.addAttribute("editId", id);
+            Iterable<Dragon> dragons = dragonService.findByCaveId(id);
+            model.addAttribute("dragonsWithCave", dragons);
+            model.addAttribute("deleteError", "Удаление невозможно: пещера занята драконом.");
+            return "dragonCave/create";
+        }
     }
 }
