@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     loadPersons(0, null, null, "");
-    loadDragons(0);
+    loadDragons(0, null, null, "");
     loadLocations(0);
     loadDragonCaves(0);
     loadDragonHeads(0);
     loadCoordinates(0);
     setupTableControls();
+    setupDragonTableControls();
 });
 
 function formatDate(timestamp) {
@@ -25,12 +26,15 @@ function loadPersons(page, sortKey, sortDir, filter) {
         });
 }
 
-function loadDragons(page) {
-    fetch(`dragons/get_page?page=${page}`)
+function loadDragons(page, sortKey, sortDir, filter) {
+    const sortParam = sortKey ? `&sort=${sortKey}` : '';
+    const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
+    const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
+    fetch(`dragons/get_page?page=${page}${sortParam}${dirParam}${filterParam}`)
         .then(res => res.json())
         .then(data => {
             renderDragonTable(data.dragons);
-            renderDragonPagination(data.pageCount, page);
+            renderDragonPagination(data.pageCount, page, sortKey, sortDir, filter);
         });
 }
 
@@ -124,9 +128,16 @@ function renderDragonTable(dragons) {
     });
 }
 
-function renderDragonPagination(totalPages, currentPage) {
+function renderDragonPagination(totalPages, currentPage, sortKey, sortDir, filter) {
     const container = document.getElementById("dragonPagination");
-    renderPagination(container, totalPages, currentPage, loadDragons);
+    container.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i + 1;
+        btn.disabled = i === currentPage;
+        btn.onclick = () => loadDragons(i, sortKey, sortDir, filter);
+        container.appendChild(btn);
+    }
 }
 
 function renderLocationTable(locations) {
@@ -234,5 +245,30 @@ function setupTableControls() {
         const sortDir = personSortDir.value;
         const filter = personFilter ? personFilter.value : '';
         loadPersons(0, sortKey, sortDir, filter);
+    });
+}
+
+function setupDragonTableControls() {
+    const dragonFilter = document.getElementById('dragonFilter');
+    const dragonSort = document.getElementById('dragonSort');
+    const dragonSortDir = document.getElementById('dragonSortDir');
+
+    if (dragonFilter) dragonFilter.addEventListener('input', () => {
+        const filter = dragonFilter.value;
+        loadDragons(0, dragonSort ? dragonSort.value : null, dragonSortDir ? dragonSortDir.value : null, filter);
+    });
+
+    if (dragonSort) dragonSort.addEventListener('change', () => {
+        const sortKey = dragonSort.value;
+        const sortDir = dragonSortDir ? dragonSortDir.value : 'asc';
+        const filter = dragonFilter ? dragonFilter.value : '';
+        loadDragons(0, sortKey, sortDir, filter);
+    });
+
+    if (dragonSortDir) dragonSortDir.addEventListener('change', () => {
+        const sortKey = dragonSort ? dragonSort.value : null;
+        const sortDir = dragonSortDir.value;
+        const filter = dragonFilter ? dragonFilter.value : '';
+        loadDragons(0, sortKey, sortDir, filter);
     });
 }

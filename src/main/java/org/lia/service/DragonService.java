@@ -11,8 +11,11 @@ import org.lia.repository.DragonRepository;
 import org.lia.models.utils.Color;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -72,4 +75,21 @@ public class DragonService {
     public Iterable<Dragon> findByHeadId(Long headId) {
         return dragonRepository.findByHeadId(headId);
     }
+
+    public Page<Dragon> getDragonsPagedAndFiltered(Pageable pageable, String filter) {
+        Specification<Dragon> spec = Specification.where(null);
+        if (filter != null && !filter.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + filter.toLowerCase() + "%"));
+        }
+        return dragonRepository.findAll(spec, pageable);
+    }
+
+    public long countFiltered(String filter) {
+        Specification<Dragon> spec = Specification.where(null);
+        if (filter != null && !filter.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + filter.toLowerCase() + "%"));
+        }
+        return dragonRepository.count(spec);
+    }
+
 }

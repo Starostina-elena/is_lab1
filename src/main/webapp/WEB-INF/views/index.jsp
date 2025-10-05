@@ -38,6 +38,20 @@
 
 <h2>Драконы</h2>
 <a href="${pageContext.request.contextPath}/dragons/create" target="_blank">+</a>
+
+<label for="dragonFilter">Фильтр по имени:</label>
+<input type="text" id="dragonFilter" placeholder="Введите имя дракона">
+<label for="dragonSort">Сортировка:</label>
+<select id="dragonSort">
+    <option value="">Без сортировки</option>
+    <option value="name">Имя</option>
+</select>
+<label for="dragonSortDir">Направление:</label>
+<select id="dragonSortDir">
+    <option value="asc">Возрастание</option>
+    <option value="desc">Убывание</option>
+</select>
+
 <table id="dragonTable">
     <tr>
         <th>ID</th>
