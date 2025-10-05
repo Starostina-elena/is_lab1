@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 public class PersonService {
     @Autowired
     private PersonRepository personRepository;
-    @Autowired
-    private LocationRepository locationRepository;
 
     public Person savePerson(String name, Color eyeColor, Color hairColor, Location location, Long weight, Country nationality) {
         Person person = new Person();
@@ -54,5 +52,9 @@ public class PersonService {
 
     public Iterable<Person> findAll() {
         return personRepository.findAll();
+    }
+
+    public Iterable<Person> findByLocationId(Long locationId) {
+        return personRepository.findByLocationId(locationId);
     }
 }

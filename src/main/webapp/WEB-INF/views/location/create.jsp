@@ -47,5 +47,34 @@
         <button type="submit" onclick="return confirm('Удалить локацию?');">Удалить</button>
     </form>
 </c:if>
+
+<c:if test="${editId != null}">
+    <c:if test="${not empty personsWithLocation}">
+        <h3>Персонажи, находящиеся в этой локации:</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Цвет глаз</th>
+                <th>Цвет волос</th>
+                <th>Локация</th>
+                <th>Вес</th>
+                <th>Национальность</th>
+            </tr>
+            <c:forEach var="person" items="${personsWithLocation}">
+                <tr>
+                    <td><a href="${pageContext.request.contextPath}/persons/update/${person.id}"
+                           target="_blank">${person.id}</a></td>
+                    <td>${person.name}</td>
+                    <td>${person.eyeColor}</td>
+                    <td>${person.hairColor}</td>
+                    <td>${person.location.id}</td>
+                    <td>${person.weight}</td>
+                    <td>${person.nationality}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+</c:if>
 </body>
 </html>

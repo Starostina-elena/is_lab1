@@ -1,8 +1,11 @@
 package org.lia.controller;
 
 
+import org.lia.models.dragon.Dragon;
+import org.lia.models.person.Person;
 import org.lia.models.utils.Location;
 import org.lia.service.LocationService;
+import org.lia.service.PersonService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,10 +23,12 @@ import java.util.Map;
 @RequestMapping("/locations")
 public class LocationController {
     private final LocationService locationService;
+    private final PersonService personService;
     int pageSize = 10;
 
-    public LocationController(LocationService locationService) {
+    public LocationController(LocationService locationService, PersonService personService) {
         this.locationService = locationService;
+        this.personService = personService;
     }
 
     @GetMapping("/get_page")
@@ -62,12 +67,16 @@ public class LocationController {
         }
         model.addAttribute("location", location);
         model.addAttribute("editId", id);
+        Iterable<Person> persons = personService.findByLocationId(id);
+        model.addAttribute("personsWithLocation", persons);
         return "location/create";
     }
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, @Valid @ModelAttribute Location location, BindingResult bindingResult, Model model) {
         model.addAttribute("editId", id);
+        Iterable<Person> persons = personService.findByLocationId(id);
+        model.addAttribute("personsWithLocation", persons);
         if (bindingResult.hasErrors()) {
             model.addAttribute("location", location);
             return "location/create";
