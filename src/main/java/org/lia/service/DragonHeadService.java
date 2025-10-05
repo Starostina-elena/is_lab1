@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DragonHeadService {
-    @Autowired
-    private DragonHeadRepository dragonHeadRepository;
+    private final DragonHeadRepository dragonHeadRepository;
+
+    public DragonHeadService(DragonHeadRepository dragonHeadRepository) {
+        this.dragonHeadRepository = dragonHeadRepository;
+    }
 
     public DragonHead saveDragonHead(Integer eyesCount) {
         DragonHead dragonHead = new DragonHead();

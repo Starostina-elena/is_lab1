@@ -18,8 +18,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DragonService {
-    @Autowired
-    private DragonRepository dragonRepository;
+    private final DragonRepository dragonRepository;
+
+    public DragonService(DragonRepository dragonRepository) {
+        this.dragonRepository = dragonRepository;
+    }
 
     public Dragon saveDragon(String name, Coordinates coordinates,
                            DragonCave cave, Person killer, long age, Color color, DragonType type,

@@ -18,8 +18,11 @@ import java.util.List;
 
 @Service
 public class PersonService {
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    public PersonService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public Person savePerson(String name, Color eyeColor, Color hairColor, Location location, Long weight, Country nationality) {
         Person person = new Person();

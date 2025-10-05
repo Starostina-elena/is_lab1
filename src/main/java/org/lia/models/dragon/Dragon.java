@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.lia.models.person.Person;
 import org.lia.models.utils.Coordinates;
 
 import org.lia.models.utils.Color;

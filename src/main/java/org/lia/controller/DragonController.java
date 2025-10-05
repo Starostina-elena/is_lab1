@@ -1,7 +1,6 @@
 package org.lia.controller;
 
 import org.lia.models.dragon.Dragon;
-import org.lia.models.person.Person;
 import org.lia.models.utils.Color;
 import org.lia.models.utils.DragonType;
 import org.lia.models.utils.DragonCharacter;
@@ -23,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("/dragons")
 public class DragonController {

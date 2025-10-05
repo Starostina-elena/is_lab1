@@ -5,5 +5,5 @@ public enum DragonCharacter {
     WISE,
     GOOD,
     CHAOTIC,
-    CHAOTIC_EVIL;
+    CHAOTIC_EVIL
 }

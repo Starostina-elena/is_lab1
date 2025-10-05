@@ -25,7 +25,7 @@ import java.util.Map;
 public class LocationController {
     private final LocationService locationService;
     private final PersonService personService;
-    int pageSize = 10;
+    final int pageSize = 10;
 
     public LocationController(LocationService locationService, PersonService personService) {
         this.locationService = locationService;

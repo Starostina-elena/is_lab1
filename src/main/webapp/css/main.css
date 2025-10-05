@@ -112,7 +112,5 @@ h1 + .a-button, h2 + .a-button, h3 + .a-button {
 }
 
 .pagination {
-    position: relative;
-    top: -20px;
-    text-align: center;
+    margin-top: 5px;
 }

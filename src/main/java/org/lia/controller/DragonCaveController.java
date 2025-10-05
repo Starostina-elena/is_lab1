@@ -23,7 +23,7 @@ import java.util.Map;
 public class DragonCaveController {
     private final DragonCaveService dragonCaveService;
     private final DragonService dragonService;
-    int pageSize = 10;
+    final int pageSize = 10;
 
     public DragonCaveController(DragonCaveService dragonCaveService, DragonService dragonService) {
         this.dragonCaveService = dragonCaveService;

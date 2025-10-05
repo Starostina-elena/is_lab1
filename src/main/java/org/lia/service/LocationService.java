@@ -1,6 +1,5 @@
 package org.lia.service;
 
-import org.lia.models.dragon.Dragon;
 import org.lia.models.utils.Location;
 import org.lia.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LocationService {
-    @Autowired
-    private LocationRepository locationRepository;
+    private final LocationRepository locationRepository;
+
+    public LocationService(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
 
     public Location saveLocation(Double x, Float y, Float z, String name) {
         Location location = new Location();

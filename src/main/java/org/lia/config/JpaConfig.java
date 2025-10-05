@@ -25,8 +25,11 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @ComponentScan("org.lia")
 public class JpaConfig {
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
+
+    public JpaConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource dataSource() {

@@ -8,7 +8,6 @@ import javax.validation.constraints.*;
 
 import org.lia.models.utils.Color;
 import org.lia.models.utils.Country;
-import org.lia.models.utils.Location;
 
 import org.lia.models.utils.Location;
 

@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CoordinatesService {
-    @Autowired
-    private CoordinatesRepository coordinatesRepository;
+    private final CoordinatesRepository coordinatesRepository;
+
+    public CoordinatesService(CoordinatesRepository coordinatesRepository) {
+        this.coordinatesRepository = coordinatesRepository;
+    }
 
     public Coordinates saveCoordinates(Integer x, Long y) {
         Coordinates coordinates = new Coordinates();

@@ -30,7 +30,7 @@ import java.util.Map;
 public class CoordinatesController {
     private final CoordinatesService coordinatesService;
     private final DragonService dragonService;
-    int pageSize = 10;
+    final int pageSize = 10;
 
     public CoordinatesController(CoordinatesService coordinatesService, DragonService dragonService) {
         this.coordinatesService = coordinatesService;

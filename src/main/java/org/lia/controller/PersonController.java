@@ -26,13 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 
+@SuppressWarnings("DuplicatedCode")
 @Controller
 @RequestMapping("/persons")
 public class PersonController {
     private final PersonService personService;
     private final LocationService locationService;
     private final DragonService dragonService;
-    int pageSize = 10;
+    final int pageSize = 10;
 
     public PersonController(PersonService personService, LocationService locationService,
                             DragonService dragonService) {

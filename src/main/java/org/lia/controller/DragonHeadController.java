@@ -23,7 +23,7 @@ import java.util.Map;
 public class DragonHeadController {
     private final DragonHeadService dragonHeadService;
     private final DragonService dragonService;
-    int pageSize = 10;
+    final int pageSize = 10;
 
     public DragonHeadController(DragonHeadService dragonHeadService, DragonService dragonService) {
         this.dragonHeadService = dragonHeadService;
