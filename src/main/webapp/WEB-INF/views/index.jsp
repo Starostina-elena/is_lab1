@@ -6,6 +6,12 @@
     <title>Lab1</title>
 </head>
 <body>
+<header>
+    <div class="top-panel-element">
+        <button id="avgAgeBtn">Средний возраст</button>
+        <span id="avgAgeResult"></span>
+    </div>
+</header>
 <h2>Персонажи</h2>
 <a href="${pageContext.request.contextPath}/persons/create" target="_blank">+</a>
 
@@ -126,6 +132,7 @@
 <div id="coordinatesPagination"></div>
 
 <script src="${pageContext.request.contextPath}/js/pagination.js"></script>
+<script src="${pageContext.request.contextPath}/js/top_panel.js"></script>
 
 </body>
 </html>

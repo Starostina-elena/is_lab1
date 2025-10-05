@@ -153,6 +153,15 @@ public class DragonController {
         return "redirect:/";
     }
 
+    @GetMapping("/average_age")
+    @ResponseBody
+    public Map<String, Object> getAverageAge() {
+        Double avg = dragonService.getAverageAge();
+        Map<String, Object> result = new HashMap<>();
+        result.put("averageAge", avg);
+        return result;
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(org.lia.models.dragon.DragonHead.class, new DragonHeadEditor(dragonHeadService));
