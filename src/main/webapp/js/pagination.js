@@ -1,3 +1,21 @@
+let personTableState = {page: 0, sortKey: null, sortDir: null, filter: ''};
+let dragonTableState = {page: 0, sortKey: null, sortDir: null, filter: ''};
+let locationTableState = {page: 0, sortKey: null, sortDir: null, filter: ''};
+let dragonCaveTableState = {page: 0};
+let dragonHeadTableState = {page: 0};
+let coordinatesTableState = {page: 0};
+
+function autoRefreshTables() {
+    setInterval(() => {
+        loadPersons(personTableState.page, personTableState.sortKey, personTableState.sortDir, personTableState.filter);
+        loadDragons(dragonTableState.page, dragonTableState.sortKey, dragonTableState.sortDir, dragonTableState.filter);
+        loadLocations(locationTableState.page, locationTableState.sortKey, locationTableState.sortDir, locationTableState.filter);
+        loadDragonCaves(dragonCaveTableState.page);
+        loadDragonHeads(dragonHeadTableState.page);
+        loadCoordinates(coordinatesTableState.page);
+    }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     loadPersons(0, null, null, "");
     loadDragons(0, null, null, "");
@@ -8,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setupPersonTableControls();
     setupDragonTableControls();
     setupLocationTableControls();
+    autoRefreshTables();
 });
 
 function formatDate(timestamp) {
@@ -16,6 +35,7 @@ function formatDate(timestamp) {
 }
 
 function loadPersons(page, sortKey, sortDir, filter) {
+    personTableState = {page, sortKey, sortDir, filter};
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
@@ -28,6 +48,7 @@ function loadPersons(page, sortKey, sortDir, filter) {
 }
 
 function loadDragons(page, sortKey, sortDir, filter) {
+    dragonTableState = {page, sortKey, sortDir, filter};
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
@@ -40,6 +61,7 @@ function loadDragons(page, sortKey, sortDir, filter) {
 }
 
 function loadLocations(page, sortKey, sortDir, filter) {
+    locationTableState = {page, sortKey, sortDir, filter};
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
@@ -52,6 +74,7 @@ function loadLocations(page, sortKey, sortDir, filter) {
 }
 
 function loadDragonCaves(page) {
+    dragonCaveTableState.page = page;
     fetch(`dragon_caves/get_page?page=${page}`)
         .then(res => res.json())
         .then(data => {
@@ -61,6 +84,7 @@ function loadDragonCaves(page) {
 }
 
 function loadDragonHeads(page) {
+    dragonHeadTableState.page = page;
     fetch(`dragon_heads/get_page?page=${page}`)
         .then(res => res.json())
         .then(data => {
@@ -70,6 +94,7 @@ function loadDragonHeads(page) {
 }
 
 function loadCoordinates(page) {
+    coordinatesTableState.page = page;
     fetch(`coordinates/get_page?page=${page}`)
         .then(res => res.json())
         .then(data => {
@@ -159,7 +184,7 @@ function renderLocationTable(locations) {
     });
 }
 
-function renderLocationPagination(totalPages, currentPage) {
+function renderLocationPagination(totalPages, currentPage, sortKey, sortDir, filter) {
     const container = document.getElementById("locationPagination");
     container.innerHTML = '';
     for (let i = 0; i < totalPages; i++) {
@@ -185,7 +210,7 @@ function renderDragonCaveTable(dragonCaves) {
 
 function renderDragonCavePagination(totalPages, currentPage) {
     const container = document.getElementById("dragonCavePagination");
-    renderPagination(container, totalPages, currentPage, loadDragonCaves);
+    renderPagination(container, totalPages, currentPage, (i) => loadDragonCaves(i));
 }
 
 function renderDragonHeadTable(dragonHeads) {
@@ -202,7 +227,7 @@ function renderDragonHeadTable(dragonHeads) {
 
 function renderDragonHeadPagination(totalPages, currentPage) {
     const container = document.getElementById("dragonHeadPagination");
-    renderPagination(container, totalPages, currentPage, loadDragonHeads);
+    renderPagination(container, totalPages, currentPage, (i) => loadDragonHeads(i));
 }
 
 function renderCoordinatesTable(coordinates) {
@@ -220,7 +245,7 @@ function renderCoordinatesTable(coordinates) {
 
 function renderCoordinatesPagination(totalPages, currentPage) {
     const container = document.getElementById("coordinatesPagination");
-    renderPagination(container, totalPages, currentPage, loadCoordinates);
+    renderPagination(container, totalPages, currentPage, (i) => loadCoordinates(i));
 }
 
 function renderPagination(container, totalPages, currentPage, loadFunction) {
