@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Координаты</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 <h2><c:choose><c:when test="${editId != null}">Редактировать координаты</c:when><c:otherwise>Создать координаты</c:otherwise></c:choose></h2>

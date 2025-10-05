@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Дракон</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 <h2><c:choose><c:when test="${editId != null}">Редактировать дракона</c:when><c:otherwise>Создать дракона</c:otherwise></c:choose></h2>

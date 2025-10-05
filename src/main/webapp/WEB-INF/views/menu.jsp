@@ -3,8 +3,12 @@
 <html>
 <head>
     <title>Меню</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
+<header>
+    <a href="${pageContext.request.contextPath}/" class="a-button">На главную</a>
+</header>
 <div>
     <button id="avgAgeBtn">Средний возраст</button>
     <span id="avgAgeResult"></span>

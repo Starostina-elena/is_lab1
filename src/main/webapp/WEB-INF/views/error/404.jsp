@@ -2,9 +2,11 @@
 <html>
 <head>
     <title>404</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+
 </head>
 <body>
-Страница не найдена
-Перейти на <a href="<c:url value='/'/>">главную</a>
+<h3>Страница не найдена</h3>
+<p>Перейти на <a href="${pageContext.request.contextPath}/">главную</a></p>
 </body>
 </html>

@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Пещера дракона</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 <h2><c:choose><c:when

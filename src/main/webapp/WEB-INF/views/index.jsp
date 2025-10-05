@@ -4,27 +4,27 @@
 <html>
 <head>
     <title>Lab1</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 <header>
-    <a href="${pageContext.request.contextPath}/menu">Меню</a>
+    <a href="${pageContext.request.contextPath}/menu" class="a-button">Меню</a>
 </header>
-<h2>Персонажи</h2>
-<a href="${pageContext.request.contextPath}/persons/create" target="_blank">+</a>
-
-<label for="personFilter">Фильтр по имени:</label>
-<input type="text" id="personFilter" placeholder="Введите имя персонажа">
-
-<label for="personSort">Сортировка:</label>
-<select id="personSort">
-    <option value="">Без сортировки</option>
-    <option value="name">Имя</option>
-</select>
-<label for="personSortDir">Направление:</label>
-<select id="personSortDir">
-    <option value="asc">Возрастание</option>
-    <option value="desc">Убывание</option>
-</select>
+<h2>Персонажи <a href="${pageContext.request.contextPath}/persons/create" target="_blank" class="a-button">+</a></h2>
+<div class="filter-sort-container">
+    <label for="personFilter">Фильтр по имени:</label>
+    <input type="text" id="personFilter" placeholder="Введите имя персонажа">
+    <label for="personSort">Сортировка:</label>
+    <select id="personSort">
+        <option value="">Без сортировки</option>
+        <option value="name">Имя</option>
+    </select>
+    <label for="personSortDir">Направление:</label>
+    <select id="personSortDir">
+        <option value="asc">Возрастание</option>
+        <option value="desc">Убывание</option>
+    </select>
+</div>
 
 <table id="personTable">
     <tr>
@@ -39,21 +39,21 @@
 </table>
 <div id="personPagination"></div>
 
-<h2>Драконы</h2>
-<a href="${pageContext.request.contextPath}/dragons/create" target="_blank">+</a>
-
-<label for="dragonFilter">Фильтр по имени:</label>
-<input type="text" id="dragonFilter" placeholder="Введите имя дракона">
-<label for="dragonSort">Сортировка:</label>
-<select id="dragonSort">
-    <option value="">Без сортировки</option>
-    <option value="name">Имя</option>
-</select>
-<label for="dragonSortDir">Направление:</label>
-<select id="dragonSortDir">
-    <option value="asc">Возрастание</option>
-    <option value="desc">Убывание</option>
-</select>
+<h2>Драконы <a href="${pageContext.request.contextPath}/dragons/create" target="_blank" class="a-button">+</a></h2>
+<div class="filter-sort-container">
+    <label for="dragonFilter">Фильтр по имени:</label>
+    <input type="text" id="dragonFilter" placeholder="Введите имя дракона">
+    <label for="dragonSort">Сортировка:</label>
+    <select id="dragonSort">
+        <option value="">Без сортировки</option>
+        <option value="name">Имя</option>
+    </select>
+    <label for="dragonSortDir">Направление:</label>
+    <select id="dragonSortDir">
+        <option value="asc">Возрастание</option>
+        <option value="desc">Убывание</option>
+    </select>
+</div>
 
 <table id="dragonTable">
     <tr>
@@ -72,20 +72,16 @@
 </table>
 <div id="dragonPagination"></div>
 
-<h2>Локации</h2>
-<a href="${pageContext.request.contextPath}/locations/create" target="_blank">+</a>
-<label for="locationFilter">Фильтр по названию:</label>
-<input type="text" id="locationFilter" placeholder="Введите название локации">
-<label for="locationSort">Сортировка:</label>
-<select id="locationSort">
-    <option value="">Без сортировки</option>
-    <option value="name">Название</option>
-</select>
-<label for="locationSortDir">Направление:</label>
-<select id="locationSortDir">
-    <option value="asc">Возрастание</option>
-    <option value="desc">Убывание</option>
-</select>
+<h2>Локации <a href="${pageContext.request.contextPath}/locations/create" target="_blank" class="a-button">+</a></h2>
+<div class="filter-sort-container">
+    <label for="locationFilter">Фильтр по названию:</label>
+    <input type="text" id="locationFilter" placeholder="Введите название локации">
+    <label for="locationSort">Сортировка:</label>
+    <select id="locationSort">
+        <option value="">Без сортировки</option>
+        <option value="name">Название</option>
+    </select>
+</div>
 <table id="locationTable">
     <tr>
         <th>ID</th>
@@ -97,8 +93,8 @@
 </table>
 <div id="locationPagination"></div>
 
-<h2>Пещеры драконов</h2>
-<a href="${pageContext.request.contextPath}/dragon_caves/create" target="_blank">+</a>
+<h2>Пещеры драконов <a href="${pageContext.request.contextPath}/dragon_caves/create" target="_blank" class="a-button">+</a></h2>
+
 <table id="dragonCaveTable">
     <tr>
         <th>ID</th>
@@ -107,8 +103,8 @@
 </table>
 <div id="dragonCavePagination"></div>
 
-<h2>Головы драконов</h2>
-<a href="${pageContext.request.contextPath}/dragon_heads/create" target="_blank">+</a>
+<h2>Головы драконов <a href="${pageContext.request.contextPath}/dragon_heads/create" target="_blank" class="a-button">+</a></h2>
+
 <table id="dragonHeadTable">
     <tr>
         <th>ID</th>
@@ -117,8 +113,8 @@
 </table>
 <div id="dragonHeadPagination"></div>
 
-<h2>Координаты</h2>
-<a href="${pageContext.request.contextPath}/coordinates/create" target="_blank">+</a>
+<h2>Координаты <a href="${pageContext.request.contextPath}/coordinates/create" target="_blank" class="a-button">+</a></h2>
+
 <table id="coordinatesTable">
     <tr>
         <th>ID</th>
