@@ -1,0 +1,199 @@
+@startuml
+class org.lia.models.utils.Location {
+- Long id
+- Double x
+- Float y
+- Float z
+- String name
+}
+
+class org.lia.models.dragon.DragonHead {
+- Long id
+- Integer eyesCount
+}
+
+class org.lia.models.dragon.Dragon {
+- long id
+- String name
+- Coordinates coordinates
+- java.time.ZonedDateTime creationDate
+- DragonCave cave
+- Person killer
+- Long age
+- Color color
+- DragonType type
+- DragonCharacter character
+- DragonHead head
+}
+
+class org.lia.controller.PersonController {
+- PersonService personService
+- LocationService locationService
+- DragonService dragonService
+~ int pageSize
+}
+
+class org.lia.controller.editor.DragonHeadEditor {
+- DragonHeadService dragonHeadService
+}
+
+interface org.lia.repository.CoordinatesRepository {
+}
+interface org.lia.repository.DragonCaveRepository {
+}
+class org.lia.controller.DragonCaveController {
+- DragonCaveService dragonCaveService
+- DragonService dragonService
+~ int pageSize
+}
+
+class org.lia.models.utils.Coordinates {
+- Long id
+- Integer x
+- Long y
+}
+
+class org.lia.models.person.Person {
+- Long id
+- String name
+- Color eyeColor
+- Color hairColor
+- Location location
+- Long weight
+- Country nationality
+}
+
+interface org.lia.repository.DragonHeadRepository {
+}
+class org.lia.controller.DragonHeadController {
+- DragonHeadService dragonHeadService
+- DragonService dragonService
+~ int pageSize
+}
+
+enum org.lia.models.utils.DragonType {
++  WATER
++  UNDERGROUND
++  AIR
++  FIRE
+}
+
+class org.lia.service.DragonService {
+- DragonRepository dragonRepository
+}
+
+enum org.lia.models.utils.Color {
++  RED
++  GREEN
++  BLUE
++  YELLOW
+}
+
+class org.lia.models.dragon.DragonCave {
+- Long id
+- Integer depth
+}
+
+class org.lia.service.DragonCaveService {
+- DragonCaveRepository dragonCaveRepository
+}
+
+class org.lia.service.PersonService {
+- PersonRepository personRepository
+}
+
+class org.lia.controller.MainPageConroller {
+}
+class org.lia.service.CoordinatesService {
+- CoordinatesRepository coordinatesRepository
+}
+
+class org.lia.controller.DragonController {
+- DragonService dragonService
+- CoordinatesService coordinatesService
+- DragonCaveService dragonCaveService
+- PersonService personService
+- DragonHeadService dragonHeadService
+~ int pageSize
+}
+
+class org.lia.controller.editor.CoordinatesEditor {
+- CoordinatesService coordinatesService
+}
+
+class org.lia.Main {
+}
+enum org.lia.models.utils.DragonCharacter {
++  CUNNING
++  WISE
++  GOOD
++  CHAOTIC
++  CHAOTIC_EVIL
+}
+
+class org.lia.controller.CoordinatesController {
+- CoordinatesService coordinatesService
+- DragonService dragonService
+~ int pageSize
+}
+
+class org.lia.config.JpaConfig {
+- Environment env
+}
+
+class org.lia.service.LocationService {
+- LocationRepository locationRepository
+}
+
+class org.lia.controller.LocationController {
+- LocationService locationService
+- PersonService personService
+~ int pageSize
+}
+
+interface org.lia.repository.PersonRepository {
+}
+interface org.lia.repository.DragonRepository {
+}
+interface org.lia.repository.LocationRepository {
+}
+class org.lia.controller.editor.LocationEditor {
+- LocationService locationService
+}
+
+class org.lia.controller.MenuController {
+}
+class org.lia.controller.editor.PersonEditor {
+- PersonService personService
+}
+
+class org.lia.service.DragonHeadService {
+- DragonHeadRepository dragonHeadRepository
+}
+
+enum org.lia.models.utils.Country {
++  GERMANY
++  VATICAN
++  JAPAN
+}
+
+class org.lia.controller.editor.DragonCaveEditor {
+- DragonCaveService dragonCaveService
+}
+
+
+
+java.beans.PropertyEditorSupport <|-- org.lia.controller.editor.DragonHeadEditor
+org.springframework.data.jpa.repository.JpaRepository <|-- org.lia.repository.CoordinatesRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- org.lia.repository.DragonCaveRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- org.lia.repository.DragonHeadRepository
+java.beans.PropertyEditorSupport <|-- org.lia.controller.editor.CoordinatesEditor
+org.springframework.data.jpa.repository.JpaRepository <|-- org.lia.repository.PersonRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- org.lia.repository.DragonRepository
+org.springframework.data.jpa.repository.JpaSpecificationExecutor <|-- org.lia.repository.DragonRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- org.lia.repository.LocationRepository
+org.springframework.data.jpa.repository.JpaSpecificationExecutor <|-- org.lia.repository.LocationRepository
+java.beans.PropertyEditorSupport <|-- org.lia.controller.editor.LocationEditor
+java.beans.PropertyEditorSupport <|-- org.lia.controller.editor.PersonEditor
+java.beans.PropertyEditorSupport <|-- org.lia.controller.editor.DragonCaveEditor
+@enduml
