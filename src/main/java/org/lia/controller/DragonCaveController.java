@@ -52,6 +52,7 @@ public class DragonCaveController {
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute DragonCave dragonCave, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getAllErrors());
             return "dragonCave/create";
         }
         DragonCave saved = dragonCaveService.saveDragonCave(dragonCave);
