@@ -22,7 +22,7 @@
     </c:if>
     <div class="field">
         <label for="name">Имя:</label>
-        <form:input path="name" type="text" required="true" maxlength="256"/>
+        <form:input path="name" type="text" required="true" maxlength="250"/>
         <form:errors path="name" cssClass="error" />
     </div>
     <div class="field">

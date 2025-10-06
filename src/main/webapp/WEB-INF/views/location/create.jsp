@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
@@ -37,7 +37,7 @@
     </div>
     <div class="field">
         <label for="name">Название:</label>
-        <form:input path="name" type="text" required="true" maxlength="256"/>
+        <form:input path="name" type="text" required="true" maxlength="250"/>
         <form:errors path="name" cssClass="error" />
     </div>
     <button type="submit">Сохранить</button>
