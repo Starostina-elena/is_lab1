@@ -162,18 +162,18 @@ public class DragonController {
         return result;
     }
 
-    @GetMapping("/count_head_less_than")
+    @GetMapping("/count_head_less_than/{maxId}")
     @ResponseBody
-    public Map<String, Object> countHeadLessThan(@RequestParam("maxId") int maxId) {
+    public Map<String, Object> countHeadLessThan(@PathVariable("maxId") int maxId) {
         int count = dragonService.countDragonsWithHeadLessThan(maxId);
         Map<String, Object> result = new HashMap<>();
         result.put("count", count);
         return result;
     }
 
-    @GetMapping("/search_by_name")
+    @GetMapping("/search/{search}")
     @ResponseBody
-    public Map<String, Object> searchByName(@RequestParam("search") String search) {
+    public Map<String, Object> searchByName(@PathVariable("search") String search) {
         Iterable<Dragon> dragons = dragonService.findDragonsByNameSubstring(search);
         Map<String, Object> result = new HashMap<>();
         result.put("dragons", dragons);

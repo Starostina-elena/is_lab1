@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("countHeadIdBtn").onclick = function () {
         const maxHeadId = document.getElementById("maxHeadIdInput").value;
-        fetch(`dragons/count_head_less_than?maxId=${encodeURIComponent(maxHeadId)}`)
+        fetch(`dragons/count_head_less_than/${encodeURIComponent(maxHeadId)}`)
             .then(res => res.json())
             .then(data => {
                 document.getElementById("countHeadIdResult").textContent =
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("searchAllBtn").onclick = function () {
         const search = document.getElementById("searchSubstringInput").value;
-        fetch(`dragons/search_by_name?search=${encodeURIComponent(search)}`)
+        fetch(`dragons/search/${encodeURIComponent(search)}`)
             .then(res => res.json())
             .then(data => data.dragons)
             .then(dragons => {
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 container.innerHTML = html;
             });
-        fetch(`persons/search_by_name?search=${encodeURIComponent(search)}`)
+        fetch(`persons/search/${encodeURIComponent(search)}`)
             .then(res => res.json())
             .then(data => data.persons)
             .then(persons => {
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 container.innerHTML = html;
             });
-        fetch(`locations/search_by_name?search=${encodeURIComponent(search)}`)
+        fetch(`locations/search/${encodeURIComponent(search)}`)
             .then(res => res.json())
             .then(data => data.locations)
             .then(locations => {

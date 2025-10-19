@@ -119,9 +119,9 @@ public class LocationController {
         }
     }
 
-    @GetMapping("/search_by_name")
+    @GetMapping("/search/{search}")
     @ResponseBody
-    public Map<String, Object> searchByName(@RequestParam("search") String search) {
+    public Map<String, Object> searchByName(@PathVariable("search") String search) {
         Iterable<Location> locations = locationService.findLocationsByNameSubstring(search);
         Map<String, Object> result = new HashMap<>();
         result.put("locations", locations);
