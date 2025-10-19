@@ -61,7 +61,7 @@ function loadPersons(page, sortKey, sortDir, filter) {
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
-    fetch(`persons/get_page?page=${page}${sortParam}${dirParam}${filterParam}`)
+    fetch(`persons/get/page?page=${page}${sortParam}${dirParam}${filterParam}`)
         .then(res => res.json())
         .then(data => {
             renderPersonTable(data.persons);
@@ -74,7 +74,7 @@ function loadDragons(page, sortKey, sortDir, filter) {
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
-    fetch(`dragons/get_page?page=${page}${sortParam}${dirParam}${filterParam}`)
+    fetch(`dragons/get/page?page=${page}${sortParam}${dirParam}${filterParam}`)
         .then(res => res.json())
         .then(data => {
             renderDragonTable(data.dragons);
@@ -87,7 +87,7 @@ function loadLocations(page, sortKey, sortDir, filter) {
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
-    fetch(`locations/get_page?page=${page}${sortParam}${dirParam}${filterParam}`)
+    fetch(`locations/get/page?page=${page}${sortParam}${dirParam}${filterParam}`)
         .then(res => res.json())
         .then(data => {
             renderLocationTable(data.locations);
@@ -97,7 +97,7 @@ function loadLocations(page, sortKey, sortDir, filter) {
 
 function loadDragonCaves(page) {
     dragonCaveTableState.page = page;
-    fetch(`dragon_caves/get_page?page=${page}`)
+    fetch(`dragon/caves/get/page?page=${page}`)
         .then(res => res.json())
         .then(data => {
             renderDragonCaveTable(data.dragonCaves);
@@ -107,7 +107,7 @@ function loadDragonCaves(page) {
 
 function loadDragonHeads(page) {
     dragonHeadTableState.page = page;
-    fetch(`dragon_heads/get_page?page=${page}`)
+    fetch(`dragon/heads/get/page?page=${page}`)
         .then(res => res.json())
         .then(data => {
             renderDragonHeadTable(data.dragonHeads);
@@ -117,7 +117,7 @@ function loadDragonHeads(page) {
 
 function loadCoordinates(page) {
     coordinatesTableState.page = page;
-    fetch(`coordinates/get_page?page=${page}`)
+    fetch(`coordinates/get/page?page=${page}`)
         .then(res => res.json())
         .then(data => {
             renderCoordinatesTable(data.coordinates);
@@ -225,7 +225,7 @@ function renderDragonCaveTable(dragonCaves) {
     }
     dragonCaves.forEach(dc => {
         const row = table.insertRow();
-        row.insertCell().innerHTML = `<a href="dragon_caves/update/${dc.id}" target="_blank">${dc.id}</a>`;
+        row.insertCell().innerHTML = `<a href="dragon/caves/update/${dc.id}" target="_blank">${dc.id}</a>`;
         row.insertCell().textContent = dc.depth;
     });
 }
@@ -242,7 +242,7 @@ function renderDragonHeadTable(dragonHeads) {
     }
     dragonHeads.forEach(dh => {
         const row = table.insertRow();
-        row.insertCell().innerHTML = `<a href="dragon_heads/update/${dh.id}" target="_blank">${dh.id}</a>`;
+        row.insertCell().innerHTML = `<a href="dragon/heads/update/${dh.id}" target="_blank">${dh.id}</a>`;
         row.insertCell().textContent = dh.eyesCount;
     });
 }

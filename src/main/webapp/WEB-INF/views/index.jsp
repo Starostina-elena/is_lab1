@@ -98,7 +98,7 @@
     <div id="locationPagination" class="pagination"></div>
 </div>
 
-<h2>Пещеры драконов <a href="${pageContext.request.contextPath}/dragon_caves/create" target="_blank"
+<h2>Пещеры драконов <a href="${pageContext.request.contextPath}/dragon/caves/create" target="_blank"
                        class="a-button">+</a></h2>
 <div class="container">
     <table id="dragonCaveTable">
@@ -110,7 +110,7 @@
     <div id="dragonCavePagination" class="pagination"></div>
 </div>
 
-<h2>Головы драконов <a href="${pageContext.request.contextPath}/dragon_heads/create" target="_blank"
+<h2>Головы драконов <a href="${pageContext.request.contextPath}/dragon/heads/create" target="_blank"
                        class="a-button">+</a></h2>
 <div class="container">
     <table id="dragonHeadTable">

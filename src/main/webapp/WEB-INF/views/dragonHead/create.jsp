@@ -9,9 +9,9 @@
 <body>
 <h2><c:choose><c:when test="${editId != null}">Редактировать голову дракона</c:when><c:otherwise>Создать голову дракона</c:otherwise></c:choose></h2>
 
-<c:set var="formAction" value="${pageContext.request.contextPath}/dragon_heads/create" />
+<c:set var="formAction" value="${pageContext.request.contextPath}/dragon/heads/create" />
 <c:if test="${editId != null}">
-    <c:set var="formAction" value="${pageContext.request.contextPath}/dragon_heads/update/${editId}" />
+    <c:set var="formAction" value="${pageContext.request.contextPath}/dragon/heads/update/${editId}" />
 </c:if>
 <form:form modelAttribute="dragonHead" method="post" action="${formAction}">
     <c:if test="${editId != null}">
@@ -29,7 +29,7 @@
 </form:form>
 
 <c:if test="${editId != null}">
-    <form method="post" action="${pageContext.request.contextPath}/dragon_heads/delete/${editId}" style="margin-top:10px;">
+    <form method="post" action="${pageContext.request.contextPath}/dragon/heads/delete/${editId}" style="margin-top:10px;">
         <button type="submit" onclick="return confirm('Удалить голову дракона?');">Удалить</button>
     </form>
 </c:if>

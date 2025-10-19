@@ -43,7 +43,7 @@ public class DragonController {
         this.dragonHeadService = dragonHeadService;
     }
 
-    @GetMapping("/get_page")
+    @GetMapping("/get/page")
     @ResponseBody
     public Map<String, Object> getDragonsPage(@RequestParam(name="page", required=false, defaultValue="0") int page,
                                               @RequestParam(name="sort", required=false) String sort,
@@ -153,7 +153,7 @@ public class DragonController {
         return "redirect:/";
     }
 
-    @GetMapping("/average_age")
+    @GetMapping("/average/age")
     @ResponseBody
     public Map<String, Object> getAverageAge() {
         Double avg = dragonService.getAverageAge();
@@ -162,7 +162,7 @@ public class DragonController {
         return result;
     }
 
-    @GetMapping("/count_head_less_than/{maxId}")
+    @GetMapping("/count/head/less/than/{maxId}")
     @ResponseBody
     public Map<String, Object> countHeadLessThan(@PathVariable("maxId") int maxId) {
         int count = dragonService.countDragonsWithHeadLessThan(maxId);
@@ -189,7 +189,7 @@ public class DragonController {
         return result;
     }
 
-    @GetMapping("/get_without_killer")
+    @GetMapping("/get/without/killer")
     @ResponseBody
     public Iterable<Dragon> getDragonsWithoutKiller() {
         return dragonService.findDragonsWithoutKiller();

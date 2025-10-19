@@ -10,9 +10,9 @@
 <h2><c:choose><c:when
         test="${editId != null}">Редактировать пещеру дракона</c:when><c:otherwise>Создать пещеру дракона</c:otherwise></c:choose></h2>
 
-<c:set var="formAction" value="${pageContext.request.contextPath}/dragon_caves/create"/>
+<c:set var="formAction" value="${pageContext.request.contextPath}/dragon/caves/create"/>
 <c:if test="${editId != null}">
-    <c:set var="formAction" value="${pageContext.request.contextPath}/dragon_caves/update/${editId}"/>
+    <c:set var="formAction" value="${pageContext.request.contextPath}/dragon/caves/update/${editId}"/>
 </c:if>
 <form:form modelAttribute="dragonCave" method="post" action="${formAction}">
     <c:if test="${editId != null}">
@@ -30,7 +30,7 @@
 </form:form>
 
 <c:if test="${editId != null}">
-    <form method="post" action="${pageContext.request.contextPath}/dragon_caves/delete/${editId}"
+    <form method="post" action="${pageContext.request.contextPath}/dragon/caves/delete/${editId}"
           style="margin-top:10px;">
         <button type="submit" onclick="return confirm('Удалить пещеру дракона?');">Удалить</button>
     </form>

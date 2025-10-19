@@ -37,7 +37,7 @@ public class CoordinatesController {
         this.dragonService = dragonService;
     }
 
-    @GetMapping("/get_page")
+    @GetMapping("/get/page")
     @ResponseBody
     public Map<String, Object> getCoordinatesPage(@RequestParam(name="page", required=false, defaultValue="0") int page) {
         Page<Coordinates> coordinates = coordinatesService.getCoordinatesPaged(PageRequest.of(page, pageSize));

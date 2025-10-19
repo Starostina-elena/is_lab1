@@ -47,7 +47,7 @@ public class PersonController {
         binder.registerCustomEditor(org.lia.models.utils.Location.class, new LocationEditor(locationService));
     }
 
-    @GetMapping("/get_page")
+    @GetMapping("/get/page")
     @ResponseBody
     public Map<String, Object> getPersonsPage(@RequestParam(name="page", required=false, defaultValue="0") int page,
                                               @RequestParam(name="sort", required=false) String sort,
@@ -161,13 +161,13 @@ public class PersonController {
         return result;
     }
 
-    @GetMapping("/get_all")
+    @GetMapping("/get/all")
     @ResponseBody
     public Iterable<Person> getAllPersons() {
         return personService.findAll();
     }
 
-    @PostMapping("/send_team")
+    @PostMapping("/send/team")
     @ResponseBody
     public Map<String, Object> sendTeamToLocation(@RequestParam("personIds") List<Long> personIds, @RequestParam("locationId") long locationId) {
         personService.updatePersonsLocation(personIds, locationId);

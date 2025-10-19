@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/dragon_heads")
+@RequestMapping("/dragon/heads")
 public class DragonHeadController {
     private final DragonHeadService dragonHeadService;
     private final DragonService dragonService;
@@ -30,7 +30,7 @@ public class DragonHeadController {
         this.dragonService = dragonService;
     }
 
-    @GetMapping("/get_page")
+    @GetMapping("/get/page")
     @ResponseBody
     public Map<String, Object> getDragonHeadPage(@RequestParam(name="page", required=false, defaultValue="0") int page) {
         Page<DragonHead> dragonHeads = dragonHeadService.getDragonHeadsPaged(PageRequest.of(page, pageSize));
@@ -55,7 +55,7 @@ public class DragonHeadController {
             return "dragonHead/create";
         }
         DragonHead saved = dragonHeadService.saveDragonHead(dragonHead);
-        return "redirect:/dragon_heads/update/" + saved.getId();
+        return "redirect:/dragon/heads/update/" + saved.getId();
     }
 
     @GetMapping("/update/{id}")
@@ -86,7 +86,7 @@ public class DragonHeadController {
         }
         existing.setEyesCount(dragonHead.getEyesCount());
         dragonHeadService.saveDragonHead(existing);
-        return "redirect:/dragon_heads/update/" + existing.getId();
+        return "redirect:/dragon/heads/update/" + existing.getId();
     }
 
     @PostMapping("/delete/{id}")

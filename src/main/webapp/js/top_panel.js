@@ -4,7 +4,7 @@ function formatDate(timestamp) {
 }
 
 function loadKillDragonLists() {
-    fetch("dragons/get_without_killer")
+    fetch("dragons/get/without/killer")
         .then(res => res.json())
         .then(dragons => {
             const select = document.getElementById("killDragonSelect");
@@ -16,7 +16,7 @@ function loadKillDragonLists() {
                 select.appendChild(option);
             });
         });
-    fetch("persons/get_all")
+    fetch("persons/get/all")
         .then(res => res.json())
         .then(persons => {
             const select = document.getElementById("killerSelect");
@@ -31,7 +31,7 @@ function loadKillDragonLists() {
 }
 
 function loadTeamAndLocationLists() {
-    fetch("persons/get_all")
+    fetch("persons/get/all")
         .then(response => response.json())
         .then(persons => {
             const teamSelect = document.getElementById("teamSelect");
@@ -44,7 +44,7 @@ function loadTeamAndLocationLists() {
             });
         });
 
-    fetch("locations/get_all")
+    fetch("locations/get/all")
         .then(response => response.json())
         .then(locations => {
             const locationSelect = document.getElementById("locationSelect");
@@ -60,7 +60,7 @@ function loadTeamAndLocationLists() {
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("avgAgeBtn").onclick = function () {
-        fetch("dragons/average_age")
+        fetch("dragons/average/age")
             .then(res => res.json())
             .then(data => {
                 document.getElementById("avgAgeResult").textContent =
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("countHeadIdBtn").onclick = function () {
         const maxHeadId = document.getElementById("maxHeadIdInput").value;
-        fetch(`dragons/count_head_less_than/${encodeURIComponent(maxHeadId)}`)
+        fetch(`dragons/count/head/less/than/${encodeURIComponent(maxHeadId)}`)
             .then(res => res.json())
             .then(data => {
                 document.getElementById("countHeadIdResult").textContent =
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const personIds = Array.from(document.getElementById("teamSelect").selectedOptions).map(option => option.value);
         const locationId = document.getElementById("locationSelect").value;
 
-        fetch("persons/send_team", {
+        fetch("persons/send/team", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",

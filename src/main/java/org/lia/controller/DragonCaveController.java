@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/dragon_caves")
+@RequestMapping("/dragon/caves")
 public class DragonCaveController {
     private final DragonCaveService dragonCaveService;
     private final DragonService dragonService;
@@ -30,7 +30,7 @@ public class DragonCaveController {
         this.dragonService = dragonService;
     }
 
-    @GetMapping("/get_page")
+    @GetMapping("/get/page")
     @ResponseBody
     public Map<String, Object> getDragonCavePage(@RequestParam(name="page", required=false, defaultValue="0") int page) {
         Page<DragonCave> dragonCaves = dragonCaveService.getDragonCavesPaged(PageRequest.of(page, pageSize));
@@ -56,7 +56,7 @@ public class DragonCaveController {
             return "dragonCave/create";
         }
         DragonCave saved = dragonCaveService.saveDragonCave(dragonCave);
-        return "redirect:/dragon_caves/update/" + saved.getId();
+        return "redirect:/dragon/caves/update/" + saved.getId();
     }
 
     @GetMapping("/update/{id}")
@@ -87,7 +87,7 @@ public class DragonCaveController {
         }
         existing.setDepth(dragonCave.getDepth());
         dragonCaveService.saveDragonCave(existing);
-        return "redirect:/dragon_caves/update/" + existing.getId();
+        return "redirect:/dragon/caves/update/" + existing.getId();
     }
 
     @PostMapping("/delete/{id}")

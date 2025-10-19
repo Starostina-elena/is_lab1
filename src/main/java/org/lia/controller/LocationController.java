@@ -32,7 +32,7 @@ public class LocationController {
         this.personService = personService;
     }
 
-    @GetMapping("/get_page")
+    @GetMapping("/get/page")
     @ResponseBody
     public Map<String, Object> getLocationPage(@RequestParam(name="page", required=false, defaultValue="0") int page,
                                                @RequestParam(name="sort", required=false) String sort,
@@ -128,7 +128,7 @@ public class LocationController {
         return result;
     }
 
-    @GetMapping("/get_all")
+    @GetMapping("/get/all")
     @ResponseBody
     public Iterable<Location> getAllLocations() {
         return locationService.findAll();
