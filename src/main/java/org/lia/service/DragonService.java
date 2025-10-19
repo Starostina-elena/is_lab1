@@ -11,13 +11,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class DragonService {
     private final DragonRepository dragonRepository;
+    private final NotificationService notificationService;
 
-    public DragonService(DragonRepository dragonRepository) {
+    public DragonService(DragonRepository dragonRepository, NotificationService notificationService) {
         this.dragonRepository = dragonRepository;
+        this.notificationService = notificationService;
     }
 
     public Dragon saveDragon(Dragon dragon) {
-        return dragonRepository.save(dragon);
+        Dragon saved = dragonRepository.save(dragon);
+        notificationService.sendReload();
+        return saved;
     }
 
     public long count() {
@@ -30,6 +34,7 @@ public class DragonService {
 
     public void deleteById(Long id) {
         dragonRepository.deleteById(id);
+        notificationService.sendReload();
     }
 
     public Iterable<Dragon> findByCoordinatesId(Long coordinatesId) {
@@ -77,6 +82,7 @@ public class DragonService {
     }
     public void killDragon(long dragonId, long killerId) {
         dragonRepository.killDragon(dragonId, killerId);
+        notificationService.sendReload();
     }
     public Iterable<Dragon> findDragonsWithoutKiller() {
         return dragonRepository.findByKillerIdIsNull();

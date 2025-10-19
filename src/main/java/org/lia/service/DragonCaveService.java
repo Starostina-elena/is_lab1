@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class DragonCaveService {
     private final DragonCaveRepository dragonCaveRepository;
+    private final NotificationService notificationService;
 
-    public DragonCaveService(DragonCaveRepository dragonCaveRepository) {
+    public DragonCaveService(DragonCaveRepository dragonCaveRepository, NotificationService notificationService) {
         this.dragonCaveRepository = dragonCaveRepository;
+        this.notificationService = notificationService;
     }
 
     public DragonCave saveDragonCave(DragonCave dragonCave) {
-        return dragonCaveRepository.save(dragonCave);
+        DragonCave saved = dragonCaveRepository.save(dragonCave);
+        notificationService.sendReload();
+        return saved;
     }
 
     public Page<DragonCave> getDragonCavesPaged(Pageable pageable) {
@@ -33,6 +37,7 @@ public class DragonCaveService {
 
     public void deleteById(Long id) {
         dragonCaveRepository.deleteById(id);
+        notificationService.sendReload();
     }
 
     public Iterable<DragonCave> findAll() {

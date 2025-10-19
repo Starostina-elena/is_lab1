@@ -15,13 +15,17 @@ import java.util.List;
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
+    private final NotificationService notificationService;
 
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, NotificationService notificationService) {
         this.personRepository = personRepository;
+        this.notificationService = notificationService;
     }
 
     public Person savePerson(Person person) {
-        return personRepository.save(person);
+        Person saved = personRepository.save(person);
+        notificationService.sendReload();
+        return saved;
     }
 
     public long count() {
@@ -34,6 +38,7 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.deleteById(id);
+        notificationService.sendReload();
     }
 
     public Iterable<Person> findAll() {
@@ -76,5 +81,6 @@ public class PersonService {
 
     public void updatePersonsLocation(List<Long> personIds, long locationId) {
         personRepository.updatePersonsLocation(personIds, locationId);
+        notificationService.sendReload();
     }
 }

@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationService {
     private final LocationRepository locationRepository;
+    private final NotificationService notificationService;
 
-    public LocationService(LocationRepository locationRepository) {
+    public LocationService(LocationRepository locationRepository, NotificationService notificationService) {
         this.locationRepository = locationRepository;
+        this.notificationService = notificationService;
     }
 
     public Location saveLocation(Location location) {
-        return locationRepository.save(location);
+        Location saved = locationRepository.save(location);
+        notificationService.sendReload();
+        return saved;
     }
 
     public long count() {
@@ -29,6 +33,7 @@ public class LocationService {
 
     public void deleteById(Long id) {
         locationRepository.deleteById(id);
+        notificationService.sendReload();
     }
 
     public Iterable<Location> findAll() {

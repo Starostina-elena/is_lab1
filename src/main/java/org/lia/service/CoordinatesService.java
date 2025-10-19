@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CoordinatesService {
     private final CoordinatesRepository coordinatesRepository;
+    private final NotificationService notificationService;
 
-    public CoordinatesService(CoordinatesRepository coordinatesRepository) {
+    public CoordinatesService(CoordinatesRepository coordinatesRepository, NotificationService notificationService) {
         this.coordinatesRepository = coordinatesRepository;
+        this.notificationService = notificationService;
     }
 
     public Coordinates saveCoordinates(Coordinates coordinates) {
-        return coordinatesRepository.save(coordinates);
+        Coordinates saved = coordinatesRepository.save(coordinates);
+        notificationService.sendReload();
+        return saved;
     }
 
     public Page<Coordinates> getCoordinatesPaged(Pageable pageable) {
@@ -33,6 +37,7 @@ public class CoordinatesService {
 
     public void deleteById(Long id) {
         coordinatesRepository.deleteById(id);
+        notificationService.sendReload();
     }
 
     public Iterable<Coordinates> findAll() {

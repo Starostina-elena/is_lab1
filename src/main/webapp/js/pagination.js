@@ -4,16 +4,38 @@ let locationTableState = {page: 0, sortKey: null, sortDir: null, filter: ''};
 let dragonCaveTableState = {page: 0};
 let dragonHeadTableState = {page: 0};
 let coordinatesTableState = {page: 0};
+let stompClient = null;
 
-function autoRefreshTables() {
-    setInterval(() => {
-        loadPersons(personTableState.page, personTableState.sortKey, personTableState.sortDir, personTableState.filter);
-        loadDragons(dragonTableState.page, dragonTableState.sortKey, dragonTableState.sortDir, dragonTableState.filter);
-        loadLocations(locationTableState.page, locationTableState.sortKey, locationTableState.sortDir, locationTableState.filter);
-        loadDragonCaves(dragonCaveTableState.page);
-        loadDragonHeads(dragonHeadTableState.page);
-        loadCoordinates(coordinatesTableState.page);
-    }, 5000);
+function reloadAllTables() {
+    loadPersons(personTableState.page, personTableState.sortKey, personTableState.sortDir, personTableState.filter);
+    loadDragons(dragonTableState.page, dragonTableState.sortKey, dragonTableState.sortDir, dragonTableState.filter);
+    loadLocations(locationTableState.page, locationTableState.sortKey, locationTableState.sortDir, locationTableState.filter);
+    loadDragonCaves(dragonCaveTableState.page);
+    loadDragonHeads(dragonHeadTableState.page);
+    loadCoordinates(coordinatesTableState.page);
+}
+
+function setupWebSocket() {
+    try {
+        const socket = new SockJS('ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function() {
+            stompClient.subscribe('/topic/changes', function(message) {
+                try {
+                    const payload = JSON.parse(message.body);
+                    if (payload) {
+                        reloadAllTables();
+                    }
+                } catch (e) {
+                    console.error('Invalid WS message', e, message.body);
+                }
+            });
+        }, function(error) {
+            console.warn('STOMP connect error, will not receive live updates', error);
+        });
+    } catch (e) {
+        console.warn('WebSocket setup failed:', e);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -26,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setupPersonTableControls();
     setupDragonTableControls();
     setupLocationTableControls();
-    autoRefreshTables();
+    setupWebSocket();
 });
 
 function formatDate(timestamp) {
