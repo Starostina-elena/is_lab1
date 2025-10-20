@@ -3,8 +3,8 @@ package org.lia.models.person;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import org.lia.models.utils.Color;
 import org.lia.models.utils.Country;
