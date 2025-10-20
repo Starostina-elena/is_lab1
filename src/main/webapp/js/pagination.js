@@ -64,7 +64,7 @@ function loadPersons(page, sortKey, sortDir, filter) {
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
-    fetch(`persons/get/page?page=${page}${sortParam}${dirParam}${filterParam}`)
+    fetch(`persons/get/page?page=${page}${sortParam}${dirParam}${filterParam}`, {'credentials': 'omit'})
         .then(res => res.json())
         .then(data => {
             renderPersonTable(data.persons);
@@ -77,7 +77,7 @@ function loadDragons(page, sortKey, sortDir, filter) {
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
-    fetch(`dragons/get/page?page=${page}${sortParam}${dirParam}${filterParam}`)
+    fetch(`dragons/get/page?page=${page}${sortParam}${dirParam}${filterParam}`, {'credentials': 'omit'})
         .then(res => res.json())
         .then(data => {
             renderDragonTable(data.dragons);
@@ -90,7 +90,7 @@ function loadLocations(page, sortKey, sortDir, filter) {
     const sortParam = sortKey ? `&sort=${sortKey}` : '';
     const dirParam = sortKey && sortDir ? `&dir=${sortDir}` : '';
     const filterParam = filter ? `&filter=${encodeURIComponent(filter)}` : '';
-    fetch(`locations/get/page?page=${page}${sortParam}${dirParam}${filterParam}`)
+    fetch(`locations/get/page?page=${page}${sortParam}${dirParam}${filterParam}`, {'credentials': 'omit'})
         .then(res => res.json())
         .then(data => {
             renderLocationTable(data.locations);
@@ -100,7 +100,7 @@ function loadLocations(page, sortKey, sortDir, filter) {
 
 function loadDragonCaves(page) {
     dragonCaveTableState.page = page;
-    fetch(`dragon/caves/get/page?page=${page}`)
+    fetch(`dragon/caves/get/page?page=${page}`, {'credentials': 'omit'})
         .then(res => res.json())
         .then(data => {
             renderDragonCaveTable(data.dragonCaves);
@@ -110,7 +110,7 @@ function loadDragonCaves(page) {
 
 function loadDragonHeads(page) {
     dragonHeadTableState.page = page;
-    fetch(`dragon/heads/get/page?page=${page}`)
+    fetch(`dragon/heads/get/page?page=${page}`, {'credentials': 'omit'})
         .then(res => res.json())
         .then(data => {
             renderDragonHeadTable(data.dragonHeads);
@@ -120,7 +120,7 @@ function loadDragonHeads(page) {
 
 function loadCoordinates(page) {
     coordinatesTableState.page = page;
-    fetch(`coordinates/get/page?page=${page}`)
+    fetch(`coordinates/get/page?page=${page}`, {'credentials': 'omit'})
         .then(res => res.json())
         .then(data => {
             renderCoordinatesTable(data.coordinates);
