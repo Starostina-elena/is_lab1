@@ -20,7 +20,7 @@ public class DragonService {
 
     public Dragon saveDragon(Dragon dragon) {
         Dragon saved = dragonRepository.save(dragon);
-        notificationService.sendReload();
+        notificationService.sendReload("dragons");
         return saved;
     }
 
@@ -34,7 +34,7 @@ public class DragonService {
 
     public void deleteById(Long id) {
         dragonRepository.deleteById(id);
-        notificationService.sendReload();
+        notificationService.sendReload("dragons");
     }
 
     public Iterable<Dragon> findByCoordinatesId(Long coordinatesId) {
@@ -82,7 +82,7 @@ public class DragonService {
     }
     public void killDragon(long dragonId, long killerId) {
         dragonRepository.killDragon(dragonId, killerId);
-        notificationService.sendReload();
+        notificationService.sendReload("dragons");
     }
     public Iterable<Dragon> findDragonsWithoutKiller() {
         return dragonRepository.findByKillerIdIsNull();

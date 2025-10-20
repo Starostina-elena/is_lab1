@@ -19,7 +19,7 @@ public class LocationService {
 
     public Location saveLocation(Location location) {
         Location saved = locationRepository.save(location);
-        notificationService.sendReload();
+        notificationService.sendReload("locations");
         return saved;
     }
 
@@ -33,7 +33,7 @@ public class LocationService {
 
     public void deleteById(Long id) {
         locationRepository.deleteById(id);
-        notificationService.sendReload();
+        notificationService.sendReload("locations");
     }
 
     public Iterable<Location> findAll() {

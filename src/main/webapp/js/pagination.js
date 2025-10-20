@@ -6,15 +6,6 @@ let dragonHeadTableState = {page: 0};
 let coordinatesTableState = {page: 0};
 let stompClient = null;
 
-function reloadAllTables() {
-    loadPersons(personTableState.page, personTableState.sortKey, personTableState.sortDir, personTableState.filter);
-    loadDragons(dragonTableState.page, dragonTableState.sortKey, dragonTableState.sortDir, dragonTableState.filter);
-    loadLocations(locationTableState.page, locationTableState.sortKey, locationTableState.sortDir, locationTableState.filter);
-    loadDragonCaves(dragonCaveTableState.page);
-    loadDragonHeads(dragonHeadTableState.page);
-    loadCoordinates(coordinatesTableState.page);
-}
-
 function setupWebSocket() {
     try {
         const socket = new SockJS('ws');
@@ -24,7 +15,19 @@ function setupWebSocket() {
                 try {
                     const payload = JSON.parse(message.body);
                     if (payload) {
-                        reloadAllTables();
+                        if (payload.reload === 'persons') {
+                            loadPersons(personTableState.page, personTableState.sortKey, personTableState.sortDir, personTableState.filter);
+                        } else if (payload.reload === 'dragons') {
+                            loadDragons(dragonTableState.page, dragonTableState.sortKey, dragonTableState.sortDir, dragonTableState.filter);
+                        } else if (payload.reload === 'locations') {
+                            loadLocations(locationTableState.page, locationTableState.sortKey, locationTableState.sortDir, locationTableState.filter);
+                        } else if (payload.reload === 'dragonCaves') {
+                            loadDragonCaves(dragonCaveTableState.page);
+                        } else if (payload.reload === 'dragonHeads') {
+                            loadDragonHeads(dragonHeadTableState.page);
+                        } else if (payload.reload === 'coordinates') {
+                            loadCoordinates(coordinatesTableState.page);
+                        }
                     }
                 } catch (e) {
                     console.error('Invalid WS message', e, message.body);

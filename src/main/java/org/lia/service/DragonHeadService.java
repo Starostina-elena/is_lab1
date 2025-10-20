@@ -19,7 +19,7 @@ public class DragonHeadService {
 
     public DragonHead saveDragonHead(DragonHead dragonHead) {
         DragonHead saved = dragonHeadRepository.save(dragonHead);
-        notificationService.sendReload();
+        notificationService.sendReload("dragon_heads");
         return saved;
     }
 
@@ -37,7 +37,7 @@ public class DragonHeadService {
 
     public void deleteById(Long id) {
         dragonHeadRepository.deleteById(id);
-        notificationService.sendReload();
+        notificationService.sendReload("dragon_heads");
     }
 
     public Iterable<DragonHead> findAll() {

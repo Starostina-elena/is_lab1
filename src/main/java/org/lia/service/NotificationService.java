@@ -13,8 +13,8 @@ public class NotificationService {
         this.messagingTemplate = messagingTemplate;
     }
 
-    public void sendReload() {
-        messagingTemplate.convertAndSend("/topic/changes", Map.of("action", "reload"));
+    public void sendReload(String tableName) {
+        messagingTemplate.convertAndSend("/topic/changes", Map.of("reload", tableName));
     }
 
 }

@@ -19,7 +19,7 @@ public class CoordinatesService {
 
     public Coordinates saveCoordinates(Coordinates coordinates) {
         Coordinates saved = coordinatesRepository.save(coordinates);
-        notificationService.sendReload();
+        notificationService.sendReload("coordinates");
         return saved;
     }
 
@@ -37,7 +37,7 @@ public class CoordinatesService {
 
     public void deleteById(Long id) {
         coordinatesRepository.deleteById(id);
-        notificationService.sendReload();
+        notificationService.sendReload("coordinates");
     }
 
     public Iterable<Coordinates> findAll() {

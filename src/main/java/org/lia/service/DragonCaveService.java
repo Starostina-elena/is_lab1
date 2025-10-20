@@ -19,7 +19,7 @@ public class DragonCaveService {
 
     public DragonCave saveDragonCave(DragonCave dragonCave) {
         DragonCave saved = dragonCaveRepository.save(dragonCave);
-        notificationService.sendReload();
+        notificationService.sendReload("dragon_caves");
         return saved;
     }
 
@@ -37,7 +37,7 @@ public class DragonCaveService {
 
     public void deleteById(Long id) {
         dragonCaveRepository.deleteById(id);
-        notificationService.sendReload();
+        notificationService.sendReload("dragon_caves");
     }
 
     public Iterable<DragonCave> findAll() {

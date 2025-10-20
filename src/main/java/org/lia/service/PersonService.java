@@ -24,7 +24,7 @@ public class PersonService {
 
     public Person savePerson(Person person) {
         Person saved = personRepository.save(person);
-        notificationService.sendReload();
+        notificationService.sendReload("persons");
         return saved;
     }
 
@@ -38,7 +38,7 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.deleteById(id);
-        notificationService.sendReload();
+        notificationService.sendReload("persons");
     }
 
     public Iterable<Person> findAll() {
@@ -81,6 +81,6 @@ public class PersonService {
 
     public void updatePersonsLocation(List<Long> personIds, long locationId) {
         personRepository.updatePersonsLocation(personIds, locationId);
-        notificationService.sendReload();
+        notificationService.sendReload("persons");
     }
 }
